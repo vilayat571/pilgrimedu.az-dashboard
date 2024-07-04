@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import fetchQuestions from "../reducers/fetchQuestions";
 import removeItem from "../reducers/removeItem";
 import questionsCount from "../reducers/questionsCount";
+import getAllscholarships from "../reducers/getAllscholarships";
 
 export const store = configureStore({
   reducer: {
     fetchQuestions:fetchQuestions,
     removeItem:removeItem,
-    questionsCount:questionsCount
+    questionsCount:questionsCount,
+    getAllscholarships:getAllscholarships
   },
 });
 

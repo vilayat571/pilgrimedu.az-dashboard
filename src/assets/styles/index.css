@@ -2,9 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Oceanwide';
+}
+
+@font-face {
+    font-family: "Oceanwide";
+    src: local("Oceanwide"), url("./assets/fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf") format("truetype");
+    src: local("Poppins"), url("../fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+}
+
+
+#routes {
+    font-family: 'Poppins';
+}
+
+#blogId {
+    font-family: 'Poppins';
+
 }

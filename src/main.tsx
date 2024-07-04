@@ -6,6 +6,10 @@ import { Provider } from "react-redux";
 import App from "./pages/Main/App.tsx";
 import { store } from "./redux/store/store.ts";
 import Questions from "./pages/Questions/Questions.tsx";
+import Scholarships from "./pages/Scholarships/Scholarships.tsx";
+import Addscholarship from "./pages/Scholarships/Addscholarship.tsx";
+import Addblog from "./pages/Blogs/Addblog.tsx";
+import Allblogs from "./pages/Blogs/Allblogs.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -14,6 +18,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/suallar" element={<Questions />} />
+          <Route path="/teqaudler" element={<Scholarships />} />
+          <Route path="/teqaudelaveet" element={<Addscholarship />} />
+          <Route path="/bloqelaveet" element={<Addblog />} />
+          <Route path="/bloqlar" element={<Allblogs />} />
         </Routes>
       </BrowserRouter>
     </Provider>

@@ -1,6 +1,6 @@
 interface ITitle {
   text: string;
-  dat: string | number | null;
+  dat: number | undefined | string | null;
 }
 
 const Title: React.FC<ITitle> = ({ text, dat }) => {

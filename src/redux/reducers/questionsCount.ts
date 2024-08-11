@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiURL } from "../../constants/URL";
 
 export interface IinitialState {
   count: number | string | null;
@@ -7,7 +8,7 @@ export interface IinitialState {
 }
 
 export const countOfQuestions = createAsyncThunk("/getCount", async () => {
-  const url = `http://localhost:5000/api/v1/questions`;
+  const url = `${apiURL}/questions`;
 
   const response = await fetch(url, {
     method: "GET",

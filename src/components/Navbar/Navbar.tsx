@@ -16,7 +16,7 @@ const Navbar = () => {
       </Link>
 
       <div id="routes" className="ml-4 text ">
-        <Link to={"/suallar"} className="flex items-center">
+        <Link to={"/"} className="flex items-center">
           <MdOutlineQuestionAnswer />
 
           <span className="mx-1">Ana səhifə</span>
@@ -40,7 +40,7 @@ const Navbar = () => {
       </div>
 
       <div id="routes" className="ml-4 mt-3 text">
-        <Link to={"/teqaudler"} className="flex items-center">
+        <Link to={"/bloqlar"} className="flex items-center">
           <SiGooglescholar />
 
           <span className="mx-1 ">Bloqlar</span>

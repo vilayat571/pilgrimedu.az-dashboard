@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiURL } from "../../constants/URL";
 
 export interface IinitialState {
   questions: any;
@@ -9,7 +10,7 @@ export interface IinitialState {
 export const rmvQuestion = createAsyncThunk(
   "/rmvQuestion",
   async ({ id }: { id: string }) => {
-    const url = `http://localhost:5000/api/v1/questions/delete/${id}`;
+    const url = `${apiURL}/questions/delete/${id}`;
 
     const response = await fetch(url, {
       method: "DELETE",

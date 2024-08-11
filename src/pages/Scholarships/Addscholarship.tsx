@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../../layout/Layout";
 import Statustitle from "../../atoms/Scholarships/Statustitle";
+import { apiURL } from "../../constants/URL";
 
 function Addscholarship() {
   const [scform, setScform] = useState({
@@ -13,7 +14,12 @@ function Addscholarship() {
     deadline: "",
   });
 
-  const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeValue = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setScform({ ...scform, [e.target.id]: e.target.value });
   };
 
@@ -23,21 +29,18 @@ function Addscholarship() {
   const sendScholarship = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `http://localhost:5000/api/v1/scholarships/add`,
-      {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(scform),
-      }
-    );
+    const response = await fetch(`${apiURL}/scholarships/add`, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(scform),
+    });
 
     const data = await response.json();
 

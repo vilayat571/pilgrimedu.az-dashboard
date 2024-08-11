@@ -10,6 +10,7 @@ import Scholarships from "./pages/Scholarships/Scholarships.tsx";
 import Addscholarship from "./pages/Scholarships/Addscholarship.tsx";
 import Addblog from "./pages/Blogs/Addblog.tsx";
 import Allblogs from "./pages/Blogs/Allblogs.tsx";
+import Singleblog from "./pages/Blogs/Singleblog.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/teqaudelaveet" element={<Addscholarship />} />
           <Route path="/bloqelaveet" element={<Addblog />} />
           <Route path="/bloqlar" element={<Allblogs />} />
+          <Route path="/bloqlar/:id" element={<Singleblog />} />
         </Routes>
       </BrowserRouter>
     </Provider>

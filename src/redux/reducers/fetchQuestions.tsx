@@ -1,15 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiURL } from "../../constants/URL";
 
-
-export interface IQuestions{
-  username:string,
-  email:string,
-  phone:string,
-  question:string,
-  _v:number,
-  _id:string,
+export interface IQuestions {
+  username: string;
+  email: string;
+  phone: string;
+  question: string;
+  _v: number;
+  _id: string;
 }
-
 
 export interface IinitialState {
   questions: IQuestions[] | null;
@@ -18,7 +17,7 @@ export interface IinitialState {
 }
 
 export const getQuestion = createAsyncThunk("/getQuestion", async () => {
-  const url = `http://localhost:5000/api/v1/questions/?page=2&limit=2`;
+  const url = `${apiURL}/questions/?page=2&limit=2`;
 
   console.log(url);
 

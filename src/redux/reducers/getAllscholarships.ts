@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiURL } from "../../constants/URL";
+import { IData } from "../../pages/Scholarships/Scholarships";
 
 export interface IinitialState {
-  data: any;
+  scholarships: IData[] | null;
   loading: boolean;
   error: string | null | undefined;
 }
 
 export const fetchScholarships = createAsyncThunk("/fetchScholarships", async () => {
-  const url = `http://localhost:5000/api/v1/scholarships`;
+  const url = `${apiURL}/scholarships`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -24,7 +26,7 @@ export const fetchScholarships = createAsyncThunk("/fetchScholarships", async ()
 });
 
 const initialState: IinitialState = {
-  data: null,
+  scholarships: null,
   error: "",
   loading: false,
 };
@@ -36,17 +38,17 @@ const getAllscholarships = createSlice({
   extraReducers(builder) {
     builder.addCase(fetchScholarships.pending, (state) => {
       state.error = null;
-      state.data = null;
+      state.scholarships = null;
       state.loading = true;
     });
     builder.addCase(fetchScholarships.fulfilled, (state, action) => {
       state.error = null;
-      state.data = action.payload;
+      state.scholarships = action.payload.scholarships;
       state.loading = false;
     });
     builder.addCase(fetchScholarships.rejected, (state, action) => {
       state.error = action.error.message;
-      state.data = null;
+      state.scholarships = null;
       state.loading = false;
     });
   },

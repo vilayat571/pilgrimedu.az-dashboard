@@ -8,20 +8,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 
 @font-face {
     font-family: "Oceanwide";
-    src: local("Oceanwide"), url("./assets/fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf") format("truetype");
-    src: local("Poppins"), url("../fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+    src: local("Oceanwide"), url("../fonts/oceanwide-cufonfonts/Oceanwide-Semibold.otf") format("truetype");
 }
 
-
-#routes {
-    font-family: 'Poppins';
-}
-
-#blogId {
-    font-family: 'Poppins';
-
+body {
+    font-family: 'Oceanwide';
 }

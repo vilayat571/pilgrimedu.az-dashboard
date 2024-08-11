@@ -4,9 +4,16 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Layout from "../../layout/Layout";
 import { newDate } from "../../constants/fullDate.ts";
+import { apiURL } from "../../constants/URL.tsx";
+
+export interface IAUTHOR {
+  name: string;
+  _id: string;
+  email: string;
+}
 
 const Addblog = () => {
-  const [thumbnail, setThumnbail] = useState(null);
+  const [thumbnail, setThumnbail] = useState("");
   const [body, setBody] = useState("");
   const [form, setForm] = useState({
     title: "",
@@ -14,36 +21,51 @@ const Addblog = () => {
     author: "",
   });
 
-  const [authors, setAuthors] = useState(null);
+  const [authors, setAuthors] = useState<null | IAUTHOR[]>(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/authors")
+    fetch(`${apiURL}/authors`)
       .then((res) => res.json())
       .then((data) => setAuthors(data.data));
   }, []);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  console.log(authors);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement> | any) =>
     setThumnbail(e.target.files[0]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const maxAllowedSize = 5 * 1024 * 1024;
 
-    const formData = new FormData();
-    formData.append("title", form.title);
-    formData.append("thumbnail", thumbnail);
-    formData.append("date", newDate);
-    formData.append("description", form.description);
-    formData.append("body", body);
-    formData.append("author", form.author);
+    if (thumbnail.length > maxAllowedSize) {
+      alert("File is too big!");
+      setThumnbail("");
+    } else {
+      e.preventDefault();
 
-    const url = "http://localhost:5000/api/v1/blogs/add";
-    const response = await axios.post(url, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+      const formData = new FormData();
+      formData.append("title", form.title);
+      formData.append("thumbnail", thumbnail);
+      formData.append("date", newDate);
+      formData.append("description", form.description);
+      formData.append("body", body);
+      formData.append("author", form.author);
 
-    console.log(response);
+      const url = `${apiURL}/blogs/add`;
+      await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setForm({
+        title: "",
+        description: "",
+        author: "",
+      });
+      setThumnbail("");
+      setBody("");
+    }
   };
 
   const modules = {
@@ -55,7 +77,11 @@ const Addblog = () => {
     ],
   };
 
-  const handleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleForm = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.id]: e.target.value });
   };
 
@@ -102,10 +128,13 @@ const Addblog = () => {
             id="author"
           >
             <option value="Müəlliflər">Müəlliflər</option>
-            {authors != null &&
-              authors.map((author) => {
-                return <option key={Math.random()} value={author.name}>{author.name}</option>;
-              })}
+            {authors?.map((author: IAUTHOR) => {
+              return (
+                <option key={Math.random()} value={author.name}>
+                  {author.name}
+                </option>
+              );
+            })}
           </select>
         </div>
 

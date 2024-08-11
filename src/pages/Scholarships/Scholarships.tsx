@@ -15,21 +15,21 @@ export interface IData {
 }
 
 const Scholarships = () => {
-  const data = useAppSelector((state) => state.getAllscholarships.data);
+  const scholarships: IData[] | null = useAppSelector(
+    (state) => state.getAllscholarships.scholarships
+  );
   const dispacth = useAppDispatch();
 
   useEffect(() => {
     dispacth(fetchScholarships());
   }, []);
 
-  console.log(data);
-
   return (
     <Layout>
-      <Title text="Ümumi təqaüdlərin sayı: " dat={data?.count} />
+      <Title text="Ümumi təqaüdlərin sayı: " dat={scholarships?.length} />
 
       <div className="grid grid-cols-3 border w-full gap-4">
-        {data?.scholarships?.map((item: IData) => {
+        {scholarships?.map((item: IData) => {
           return (
             <div className="col-span-1 flex flex-col mb-4 px-8 py-4 border">
               <span className="mb-4 block">{item.name.slice(0, 20)}</span>

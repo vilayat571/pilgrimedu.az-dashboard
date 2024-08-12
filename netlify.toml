@@ -1,0 +1,12 @@
+[build]
+  # Directory where the build output is located
+  publish = "build"
+
+  # Command to build your site
+  command = "npm run build"
+
+[[redirects]]
+  # Redirect all requests to the index.html file (useful for single-page apps)
+  from = "/*"
+  to = "/index.html"
+  status = 200

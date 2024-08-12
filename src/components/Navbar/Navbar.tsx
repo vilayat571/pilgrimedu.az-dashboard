@@ -27,7 +27,7 @@ const Navbar = () => {
         <Link to={"/suallar"} className="flex items-center">
           <MdOutlineQuestionAnswer />
 
-          <span className="mx-1">Suallar</span>
+          <span className="mx-1">Suallar +</span>
         </Link>
       </div>
 

@@ -17,7 +17,7 @@ export interface IinitialState {
 }
 
 export const getQuestion = createAsyncThunk("/getQuestion", async () => {
-  const url = `${apiURL}/questions/?page=2&limit=2`;
+  const url = `${apiURL}/questions`;
 
   console.log(url);
 

@@ -6,6 +6,7 @@ export interface IQuestions {
   email: string;
   phone: string;
   question: string;
+  date:string,
   _v: number;
   _id: string;
 }

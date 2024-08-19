@@ -6,14 +6,15 @@ import Title from "../../atoms/Layout/Title";
 import SearchQuestions from "../../atoms/Questions/SearchQuestions";
 
 export interface IData {
-  name: string;
-  country: string;
-  region: string;
-  type: string;
-  degree: string;
-  description: string;
-  deadline: string;
-  _id: string;
+  name?: string;
+  country?: string;
+  region?: string;
+  type?: string;
+  degree?: string;
+  description?: string;
+  deadline?: string;
+  _id?: string;
+date?:string
 }
 
 const Scholarships = () => {
@@ -35,7 +36,7 @@ const Scholarships = () => {
   };
 
   const filteredData = scholarships?.filter((item) => {
-    return item.name.toLocaleLowerCase().includes(query.toLocaleLowerCase());
+    return item.name?.toLocaleLowerCase().includes(query.toLocaleLowerCase());
   });
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -167,7 +168,7 @@ const Scholarships = () => {
                   } text-white tracking-widest py-3 w-24 rounded text-sm mt-2`}
                   disabled={!editing ? true : false}
                   onClick={() => {
-                    sendData(data._id);
+                    sendData(data._id ?? '');
                   }}
                 >
                   Düzəlt

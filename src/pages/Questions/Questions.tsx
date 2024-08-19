@@ -123,7 +123,7 @@ function Questions() {
                         className=" border cursor-pointer bg-white text-center px-8 py-4"
                       >
                         <td className=" cursor-pointer flex items-center px-2 pl-6 py-4 ">
-                          {item.username.slice(0, 5)}
+                          {item.username}
                         </td>
                         <td className="px-2 py-2  tracking-wider ">
                           <button

@@ -23,19 +23,28 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div id="routes" className="ml-4 text mt-3">
-        <Link to={"/suallar"} className="flex items-center">
-          <MdOutlineQuestionAnswer />
+      <div id="routes" className="ml-4 mt-3 text">
+        <Link to={"#"} className="flex items-center">
+          <SiGooglescholar />
 
-          <span className="mx-1">Suallar +</span>
+          <span className="mx-1 ">İstifadəçilər</span>
         </Link>
       </div>
+
+
 
       <div id="routes" className="ml-4 mt-3 text">
         <Link to={"/teqaudler"} className="flex items-center">
           <SiGooglescholar />
 
           <span className="mx-1 ">Təqaüdlər</span>
+        </Link>
+      </div>
+      <div id="routes" className="ml-4 mt-3 text">
+        <Link to={"/teqaudelaveet"} className="flex items-center">
+          <SiSemanticscholar />
+
+          <span className="mx-1 ">Təqaüd əlavə et</span>
         </Link>
       </div>
 
@@ -46,24 +55,6 @@ const Navbar = () => {
           <span className="mx-1 ">Bloqlar</span>
         </Link>
       </div>
-
-      
-      <div id="routes" className="ml-4 mt-3 text">
-        <Link to={"/teqaudler"} className="flex items-center">
-          <SiGooglescholar />
-
-          <span className="mx-1 ">İstifadəçilər</span>
-        </Link>
-      </div>
-
-      <div id="routes" className="ml-4 mt-3 text">
-        <Link to={"/teqaudelaveet"} className="flex items-center">
-          <SiSemanticscholar />
-
-          <span className="mx-1 ">Təqaüd əlavə et</span>
-        </Link>
-      </div>
-
       <div id="routes" className="ml-4 mt-3 text">
         <Link to={"/bloqelaveet"} className="flex items-center">
           <SiSemanticscholar />
@@ -71,6 +62,18 @@ const Navbar = () => {
           <span className="mx-1 ">Bloq əlavə et</span>
         </Link>
       </div>
+      
+   
+      <div id="routes" className="ml-4 text mt-3">
+        <Link to={"/suallar"} className="flex items-center">
+          <MdOutlineQuestionAnswer />
+
+          <span className="mx-1">Suallar +</span>
+        </Link>
+      </div>
+    
+
+    
 
 
     </div>

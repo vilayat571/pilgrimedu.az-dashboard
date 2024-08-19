@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store/store";
 import { fetchScholarships } from "../../redux/reducers/getAllscholarships";
 import Title from "../../atoms/Layout/Title";
 import SearchQuestions from "../../atoms/Questions/SearchQuestions";
+import { apiURL } from "../../constants/URL";
 
 export interface IData {
   name?: string;
@@ -49,7 +50,7 @@ const Scholarships = () => {
   };
 
   const sendData = (id:string) => {
-    fetch(`http://localhost:5000/api/v1/scholarships/edit/${id}`, {
+    fetch(`${apiURL}/scholarships/edit/${id}`, {
       method: "PUT", // Specify the HTTP method as 'PUT'
       headers: {
         "Content-Type": "application/json", // Specify the content type

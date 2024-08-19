@@ -1,6 +1,6 @@
-[build]
-  # Directory where the build output is located
-  publish = "build"
+[dist]
+  # Directory where the dist output is located
+  publish = "dist"
 
   # Command to build your site
   command = "npm run build"

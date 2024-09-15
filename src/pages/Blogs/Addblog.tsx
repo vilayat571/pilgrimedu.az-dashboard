@@ -91,6 +91,7 @@ const Addblog = () => {
         <div className="mb-10">
           <span className="text-xl font-bold">Başlıq :</span>
           <input
+            required={true}
             type="text"
             id="title"
             className="block outline-none w-1/2 py-4 
@@ -105,6 +106,7 @@ const Addblog = () => {
         <div className="mb-10">
           <span className="text-xl font-bold">Açıqlama :</span>
           <input
+            required={true}
             type="text"
             id="description"
             className="block w-3/4 outline-none py-4 
@@ -141,6 +143,7 @@ const Addblog = () => {
         <div className="mb-10">
           <span className="text-xl font-bold">Kover şəkli:</span>
           <input
+            required={true}
             type="file"
             id="thumbnail"
             className="block  mt-3"
@@ -162,6 +165,7 @@ const Addblog = () => {
 
         <button
           className="mt-10 px-6 rounded py-3 bg-black text-white"
+          
           type="submit"
         >
           Bloq əlavə et

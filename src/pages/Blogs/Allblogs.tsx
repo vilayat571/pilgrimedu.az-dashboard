@@ -4,19 +4,20 @@ import { Link } from "react-router-dom";
 import { apiURL } from "../../constants/URL";
 
 
-interface IITEM{
+export interface IITEM{
   _id:string, 
   title:string,
   author:string,
   date:string,
   thumbnail:string
+  body?:string | undefined | null
 }
 
 function Allblogs() {
   const [blogs, setBlogs] = useState<IITEM[] | null>(null);
 
   useEffect(() => {
-    fetch(`${apiURL}/blogs`)
+    fetch(`http://localhost:5000/api/v1/blogs`)
       .then((res) => res.json())
       .then((data) => setBlogs(data.blogs));
   }, []);

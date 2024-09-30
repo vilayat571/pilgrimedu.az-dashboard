@@ -18,7 +18,6 @@ const Addblog = () => {
   const [form, setForm] = useState({
     title: "",
     description: "",
-    author: "",
   });
 
   const [authors, setAuthors] = useState<null | IAUTHOR[]>(null);
@@ -49,7 +48,6 @@ const Addblog = () => {
       formData.append("date", newDate);
       formData.append("description", form.description);
       formData.append("body", body);
-      formData.append("author", form.author);
 
       const url = `${apiURL}/blogs/add`;
       await axios.post(url, formData, {
@@ -61,7 +59,6 @@ const Addblog = () => {
       setForm({
         title: "",
         description: "",
-        author: "",
       });
       setThumnbail("");
       setBody("");
@@ -118,27 +115,6 @@ const Addblog = () => {
           />
         </div>
 
-        <div className="mb-10">
-          <span className="text-xl font-bold">Müəllif:</span>
-          <select
-            required
-            onChange={(e) => handleForm(e)}
-            className="mb-6 h-14 px-2 py-2 block mt-4 rounded-md text-[#000000] 
-             placeholder:text-[#000000] indent-3 border-[1px]
-              border-[#E3E3E3] w-1/2 outline-none focus:outline-none   "
-            value={form.author}
-            id="author"
-          >
-            <option value="Müəlliflər">Müəlliflər</option>
-            {authors?.map((author: IAUTHOR) => {
-              return (
-                <option key={Math.random()} value={author.name}>
-                  {author.name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
 
         <div className="mb-10">
           <span className="text-xl font-bold">Kover şəkli:</span>

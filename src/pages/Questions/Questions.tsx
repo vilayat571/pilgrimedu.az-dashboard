@@ -15,7 +15,7 @@ function Questions() {
   useEffect(() => {
     dispatch(getQuestion());
     dispatch(countOfQuestions());
-  }, []);
+  }, [dispatch]);
 
   const loading: boolean = useAppSelector(
     (state) => state.fetchQuestions.loading

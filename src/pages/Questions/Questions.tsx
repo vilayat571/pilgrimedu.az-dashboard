@@ -3,14 +3,21 @@ import Layout from "../../layout/Layout";
 import { useAppDispatch, useAppSelector } from "../../redux/store/store";
 import { getQuestion } from "../../redux/reducers/fetchQuestions";
 import { rmvQuestion } from "../../redux/reducers/removeItem";
-import Thead from "../../components/Questions/Table/Thead";
 import { countOfQuestions } from "../../redux/reducers/questionsCount";
 import TitleOfQuestions from "../../atoms/Questions/TitleOfQuestions";
 import SearchQuestions from "../../atoms/Questions/SearchQuestions";
+import Popupquestions from "../../atoms/Questions/Popupquestions";
+import { IQuestions, TQuestions } from "../../types/QuestionsType";
+import LoadingText from "../../atoms/Layout/LoadingText";
+import NotfoundData from "../../atoms/Layout/NotfoundData";
+import NotResut from "../../atoms/Layout/NotResut";
+import { motion } from "framer-motion";
 
 function Questions() {
   const dispatch = useAppDispatch();
-  const questions = useAppSelector((state) => state.fetchQuestions.questions);
+  const questions: IQuestions[] | null = useAppSelector(
+    (state) => state.fetchQuestions.questions
+  );
 
   useEffect(() => {
     dispatch(getQuestion());
@@ -21,9 +28,10 @@ function Questions() {
     (state) => state.fetchQuestions.loading
   );
 
-  const [text, setText] = useState<string>("");
+  const [text, setText] = useState<TQuestions<string>>("");
+  const [query, setQuery] = useState<TQuestions<string>>("");
 
-  const deleteQuestion = (id: string) => {
+  const deleteQuestion = (id: TQuestions<string>) => {
     const answer = confirm("Bu sualı silmək istəyirsiniz?");
 
     if (answer) {
@@ -32,132 +40,115 @@ function Questions() {
           dispatch(getQuestion());
           dispatch(countOfQuestions());
         })
-        .then(() => setText("Sual silindi!"))
+        .then(() => setText("Sual uğurla silinmişdir!"))
         .then(() => {
           setTimeout(() => {
             setText("");
           }, 2000);
-        }).then(()=>setData(null))
+        })
+        .then(() => setData(null));
     }
   };
 
-  const [query, setQuery] = useState<string>("");
-
-
-  const changeInpvalues = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeInpvalues = (
+    e: TQuestions<React.ChangeEvent<HTMLInputElement>>
+  ) => {
     setQuery(e.target.value);
   };
 
-  const filteredData = questions?.filter((item) => {
-    return item.username
-      .toLowerCase()
-      .includes(query.toLowerCase());
+  const filteredData: IQuestions[] | undefined = questions?.filter((item) => {
+    return item.username.toLowerCase().includes(query.toLowerCase());
   });
 
-  const [data, setData] = useState<null | {
-    email: string;
-    username: string;
-    phone: string;
-    date: string;
-    question: string;
-    _id: string;
-  }>(null);
-
+  const [data, setData] = useState<null | IQuestions>(null);
 
   return (
-    <>
+    <motion.div
+      initial={{ x: -100 }}
+      animate={{ x: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}
+    >
       {loading ? (
-        <div
-          className="bg-[#DADADA] w-full h-screen text-center 
-        flex justify-center items-center"
-        >
-          <p className="text-4xl text-black">Yüklənir</p>
-        </div>
+        <LoadingText text="Suallar yüklənir" />
       ) : (
         <Layout>
-          {questions?.length == 0 && "Sual mövcud deyil!"}
-          {questions?.length && (
+          {questions?.length == 0 ? (
+            <div className="w-full h-screen flex flex-col items-center justify-center">
+              <NotfoundData text="Sual mövcud deyil!" path="/bloqlar" />
+            </div>
+          ) : (
             <>
               <TitleOfQuestions />
-              <div className="absolute right-12 top-12 text-lg">{text}</div>
+              {text.length > 0 && (
+                <div className="absolute right-12 top-12 text-lg bg-green-600 text-white px-5 py-3 rounded">
+                  {text}
+                </div>
+              )}
               <SearchQuestions query={query} changeValue={changeInpvalues} />
 
-              <table>
-                <Thead />
-                {data !== null && (
-                  <div
-                    className="w-full h-screen bg-[#DADADA] z-10 absolute top-0 left-0
-                  flex justify-center items-center"
-                  >
-                    <div className=" cursor-pointer bg-white text-left flex gap-y-2 p-8 rounded-md flex-col">
-                      <span className="text-xl">{data.username}</span>
+              {data !== null && (
+                <Popupquestions
+                  setQuery={setQuery}
+                  setData={setData}
+                  deleteQuestion={deleteQuestion}
+                  data={data}
+                />
+              )}
 
-                      <span className="text-xl">{data.email}</span>
-
-                      <span className="text-xl">{data.phone}</span>
-
-                      <span className="text-xl">{data.question}</span>
-
-                      <div className="flex gap-4 mt-3">
-                        <button
-                          onClick={() => deleteQuestion(data._id)}
-                          className="bg-red-600 text-white tracking-widest py-3 w-24 rounded text-sm mt-2"
+              <div className="mt-0 flex gap-4 w-[74%]  flex-col">
+                {filteredData && filteredData.length > 0 ? (
+                  filteredData?.map(
+                    (item: IQuestions, index: TQuestions<number>) => {
+                      return (
+                        <div
+                          key={index}
+                          className={` bg-white
+              py-4 px-8 rounded flex flex-row items-center justify-between 
+              }`}
                         >
-                          Sil
-                        </button>
-                        <button
-                          className=" bg-[#0F0916] text-white tracking-widest py-3 w-24 rounded text-sm mt-2"
-                          onClick={() => setData(null)}
-                        >
-                          Bağla
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`w-10 h-10 flex items-center justify-center text-white rounded-full mr-3`}
+                              style={{ backgroundColor: "#210442" }}
+                            >
+                              {item.username.slice(0, 1)}
+                            </span>
+                            <span className="w-32">{item.username}</span>
+
+                            <span className=" text-[#2c2c2c] text-sm ml-3">
+                              {item.email}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <button
+                              onClick={() => deleteQuestion(item._id)}
+                              className="bg-red-600 text-white cursor-pointer mx-1 px-5 py-2 rounded"
+                            >
+                              Sil
+                            </button>
+                            <button
+                              onClick={() => setData(item)}
+                              className="bg-green-600 text-white cursor-pointer mx-1 px-5 py-2 rounded"
+                            >
+                              Tam bax
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )
+                ) : (
+                  <NotResut
+                    text="Təəssüf ki, axtarışa uyğun nəticə tapılmadı"
+                    setQuery={setQuery}
+                  />
                 )}
-                <tbody>
-                  {filteredData?.map((item) => {
-                    return (
-                      <tr
-                        key={item._id}
-                        className=" border cursor-pointer bg-white text-center px-8 py-4"
-                      >
-                        <td className=" cursor-pointer flex items-center px-2 pl-6 py-4 ">
-                          {item.username}
-                        </td>
-                        <td className="px-2 py-2  tracking-wider ">
-                          <button
-                            onClick={() => deleteQuestion(item._id)}
-                            className="bg-red-600 text-white cursor-pointer mx-1 px-3 py-2 rounded-sm"
-                          >
-                            Sil
-                          </button>
-                          <button
-                            onClick={() => setData(item)}
-                            className="bg-green-600 text-white cursor-pointer mx-1 px-3 py-2 rounded-sm"
-                          >
-                            Bax
-                          </button>
-                        </td>
-                        <td className="px-2 py-2">
-                          {item.email.slice(0, 10)}..
-                        </td>
-                        <td className="px-2 py-2">
-                          {item.phone.slice(0, 10)}..
-                        </td>
-                        <td className="px-2 py-2">
-                          {item.question.slice(0, 10)}..
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              </div>
             </>
           )}
         </Layout>
       )}
-    </>
+    </motion.div>
   );
 }
 

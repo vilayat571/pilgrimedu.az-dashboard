@@ -18,14 +18,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/suallar" element={<Questions />} />
-          <Route path="/teqaudler" element={<Scholarships />} />
-          <Route path="/teqaudelaveet" element={<Addscholarship />} />
-          <Route path="/bloqelaveet" element={<Addblog />} />
-          <Route path="/bloqlar" element={<Allblogs />} />
-          <Route path="/bloqlar/:id" element={<Singleblog />} />
-          <Route path="/users" element={<AllUsers />} />
+          <Route path="/" element={<App />} /> {/*  əsas səhifə */}
+          <Route path="/suallar" element={<Questions />} /> {/*  suallar + (edilmişdir) */}
+          <Route path="/teqaudler" element={<Scholarships />} /> {/*  təqaüdlər */}
+          <Route path="/teqaudelaveet" element={<Addscholarship />} /> {/*  təqaüd əlavə et */}
+          <Route path="/bloqelaveet" element={<Addblog />} /> {/* bloq əlavə et */}
+          <Route path="/bloqlar" element={<Allblogs />} /> {/* bütün bloqlar */}
+          <Route path="/bloqlar/:id" element={<Singleblog />} /> {/* tək blog */}
+          <Route path="/users" element={<AllUsers />} />  {/* istifadəçilər */}
         </Routes>
       </BrowserRouter>
     </Provider>

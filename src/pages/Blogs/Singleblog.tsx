@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { IITEM } from "./Allblogs";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Layout from "../../layout/Layout";

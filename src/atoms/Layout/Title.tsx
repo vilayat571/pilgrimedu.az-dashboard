@@ -5,8 +5,8 @@ interface ITitle {
 
 const Title: React.FC<ITitle> = ({ text, dat }) => {
   return (
-    <div className="flex mb-8">
-      <p className="text-[#3C3C3C] text-3xl ">
+    <div className="flex mb-8 mt-12">
+      <p className="text-[#000] text-4xl ">
         <span>{text}</span>
         <span>{dat}</span>
       </p>

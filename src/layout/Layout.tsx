@@ -1,5 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
+import { motion } from "framer-motion";
+
 
 interface ILayout {
   children: React.ReactNode;
@@ -7,7 +9,11 @@ interface ILayout {
 
 const Layout: React.FC<ILayout> = ({ children }) => {
   return (
-    <>
+    <motion.div
+    initial={{ x: -100 }}
+    animate={{ x: 0 }}
+    transition={{ type: "spring", stiffness: 100 }}
+  >
       <div
         className="flex
      flex-row justify-between items-start"
@@ -24,7 +30,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
           desktop komputerlərdə çalışır.
         </p>
       </div> */}
-    </>
+    </motion.div>
   );
 };
 

@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
-import { apiURL } from "../../constants/URL";
 import SearchQuestions from "../../atoms/Questions/SearchQuestions";
 import Title from "../../atoms/Layout/Title";
 import NotResut from "../../atoms/Layout/NotResut";
 import { TQuestions } from "../../types/QuestionsType";
-import { div } from "framer-motion/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -59,6 +57,14 @@ function Allblogs() {
     setPopup(data);
   };
 
+  const mappedPopup = new Map();
+  mappedPopup.set("popupData", [
+    popup?.author,
+    popup?.body,
+    popup?.thumbnail,
+    popup?.title,
+  ]);
+
   return (
     <Layout>
       <div className="mt-8">
@@ -67,13 +73,39 @@ function Allblogs() {
       </div>
 
       {popup != null && (
-        <div className="flex fixed bg-white left-0 top-0 w-full h-screen items-center justify-center">
+        <div className="flex fixed bg-white left-0 top-0 w-full h-auto pt-24 items-center pb-12 justify-center">
           <FontAwesomeIcon
             icon={faTimes}
             onClick={() => setPopup(null)}
             className="absolute right-4 px-5 py-4 text-lg cursor-pointer top-4 bg-red-600 text-white rounded"
           />
-          <h1>Lorem ipsum dolor sit.</h1>
+          <div className="flex flex-col px-4 py-5 w-full items-center justify-center h-auto rounded">
+            <div className="w-full flex items-center flex-col justify-center ">
+              <div className="mt-5 mb-6 px-6 text-3xl w-3/4 text-left ">
+                {popup.title}
+              </div>
+              <img
+                src={popup.thumbnail}
+                className="w-3/4 rounded h-[600px]  object-cover  border"
+                alt={`the image of ${popup.title}`}
+              />
+              <div className="text-3xl font-semibold text-justify px-5 w-3/4 mt-8 tracking-wider leading-[35px]">
+                {popup.title}
+              </div>
+              <div
+                className="text-lg text-justify w-3/4 mt-3 tracking-wider leading-[35px] px-5"
+                dangerouslySetInnerHTML={{ __html: popup.body || "" }}
+              />
+            </div>
+            <div className="text-base font-semibold text-justify px-5 w-3/4 mt-8 tracking-wider leading-[35px]">
+              <button  className="px-7 py-2 rounded text-white bg-black">
+                Geri dön
+              </button>
+              <button className="px-7 py-2 rounded text-white bg-green-600 ml-5" >
+                Düzəliş et
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

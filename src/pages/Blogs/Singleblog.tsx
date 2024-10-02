@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { IITEM } from "./Allblogs";
+//import { IITEM } from "./Allblogs";
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -13,14 +13,13 @@ export interface IAUTHOR {
 }
 
 const Singleblog = () => {
-  const [blog, setBlog] = useState<IITEM | null>(null);
-  const { id } = useParams();
+/*   const [blog, setBlog] = useState<IITEM | null>(null);
+ */  const { id } = useParams();
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/v1/blogs/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        setBlog(data.blog);
         setForm({
           title: data.blog.title || "",
           description: data.blog.description || "",
@@ -49,14 +48,15 @@ const Singleblog = () => {
     formData.append("description", form.description);
     formData.append("body", body);
   
-    const url = `http://localhost:5000/api/v1/blogs/put/${id}`;
+  /*   const url = `http://localhost:5000/api/v1/blogs/put/${id}`;
   
     const response = await fetch(url, {
       method: "PUT",
       body: formData, // Send FormData directly
     });
-  };
+  }; */
   
+  }
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],

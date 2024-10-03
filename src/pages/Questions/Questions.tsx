@@ -8,10 +8,8 @@ import TitleOfQuestions from "../../atoms/Questions/TitleOfQuestions";
 import SearchQuestions from "../../atoms/Questions/SearchQuestions";
 import Popupquestions from "../../atoms/Questions/Popupquestions";
 import { IQuestions, TQuestions } from "../../types/QuestionsType";
-import LoadingText from "../../atoms/Layout/LoadingText";
 import NotfoundData from "../../atoms/Layout/NotfoundData";
 import NotResut from "../../atoms/Layout/NotResut";
-import { motion } from "framer-motion";
 
 function Questions() {
   const dispatch = useAppDispatch();
@@ -23,10 +21,6 @@ function Questions() {
     dispatch(getQuestion());
     dispatch(countOfQuestions());
   }, [dispatch]);
-
-  const loading: boolean = useAppSelector(
-    (state) => state.fetchQuestions.loading
-  );
 
   const [text, setText] = useState<TQuestions<string>>("");
   const [query, setQuery] = useState<TQuestions<string>>("");
@@ -63,92 +57,82 @@ function Questions() {
   const [data, setData] = useState<null | IQuestions>(null);
 
   return (
-    <motion.div
-      initial={{ x: -100 }}
-      animate={{ x: 0 }}
-      transition={{ type: "spring", stiffness: 100 }}
-    >
-      {loading ? (
-        <LoadingText text="Suallar yüklənir" />
+    <Layout>
+      {questions?.length == 0 ? (
+        <div className="w-full h-screen flex flex-col items-center justify-center">
+          <NotfoundData text="Sual mövcud deyil!" path="/bloqlar" />
+        </div>
       ) : (
-        <Layout>
-          {questions?.length == 0 ? (
-            <div className="w-full h-screen flex flex-col items-center justify-center">
-              <NotfoundData text="Sual mövcud deyil!" path="/bloqlar" />
+        <>
+          <TitleOfQuestions />
+          {text.length > 0 && (
+            <div className="absolute right-12 top-12 text-lg bg-green-600 text-white px-5 py-3 rounded">
+              {text}
             </div>
-          ) : (
-            <>
-              <TitleOfQuestions />
-              {text.length > 0 && (
-                <div className="absolute right-12 top-12 text-lg bg-green-600 text-white px-5 py-3 rounded">
-                  {text}
-                </div>
-              )}
-              <SearchQuestions query={query} changeValue={changeInpvalues} />
+          )}
+          <SearchQuestions query={query} changeValue={changeInpvalues} />
 
-              {data !== null && (
-                <Popupquestions
-                  setQuery={setQuery}
-                  setData={setData}
-                  deleteQuestion={deleteQuestion}
-                  data={data}
-                />
-              )}
+          {data !== null && (
+            <Popupquestions
+              setQuery={setQuery}
+              setData={setData}
+              deleteQuestion={deleteQuestion}
+              data={data}
+            />
+          )}
 
-              <div className="mt-0 flex gap-4 w-[74%]  flex-col">
-                {filteredData && filteredData.length > 0 ? (
-                  filteredData?.map(
-                    (item: IQuestions, index: TQuestions<number>) => {
-                      return (
-                        <div
-                          key={index}
-                          className={` bg-white
+          <div className="mt-0 flex gap-4 w-[74%]  flex-col">
+            {filteredData && filteredData.length > 0 ? (
+              filteredData?.map(
+                (item: IQuestions, index: TQuestions<number>) => {
+                  return (
+                    <div
+                      key={index}
+                      className={` bg-white
               py-4 px-8 rounded flex flex-row items-center justify-between 
               }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`w-10 h-10 flex items-center justify-center text-white rounded-full mr-3`}
+                          style={{ backgroundColor: "#210442" }}
                         >
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`w-10 h-10 flex items-center justify-center text-white rounded-full mr-3`}
-                              style={{ backgroundColor: "#210442" }}
-                            >
-                              {item.username.slice(0, 1)}
-                            </span>
-                            <span className="w-32">{item.username}</span>
+                          {item.username.slice(0, 1)}
+                        </span>
+                        <span className="w-32">{item.username}</span>
 
-                            <span className=" text-[#2c2c2c] text-sm ml-3">
-                              {item.email}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <button
-                              onClick={() => deleteQuestion(item._id)}
-                              className="bg-red-600 text-white cursor-pointer mx-1 px-5 py-2 rounded"
-                            >
-                              Sil
-                            </button>
-                            <button
-                              onClick={() => setData(item)}
-                              className="bg-green-600 text-white cursor-pointer mx-1 px-5 py-2 rounded"
-                            >
-                              Tam bax
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    }
-                  )
-                ) : (
-                  <NotResut
-                    text="Təəssüf ki, axtarışa uyğun nəticə tapılmadı"
-                    setQuery={setQuery}
-                  />
-                )}
-              </div>
-            </>
-          )}
-        </Layout>
+                        <span className=" text-[#2c2c2c] text-sm ml-3">
+                          {item.email}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => deleteQuestion(item._id)}
+                          className="bg-red-600 text-white cursor-pointer mx-1 px-5 py-2 rounded"
+                        >
+                          Sil
+                        </button>
+                        <button
+                          onClick={() => setData(item)}
+                          className="bg-green-600 text-white cursor-pointer mx-1 px-5 py-2 rounded"
+                        >
+                          Tam bax
+                        </button>
+                      </div>
+                    </div>
+                  );
+                }
+              )
+            ) : (
+              <NotResut
+                text="Təəssüf ki, axtarışa uyğun nəticə tapılmadı"
+                setQuery={setQuery}
+              />
+            )}
+          </div>
+        </>
       )}
-    </motion.div>
+    </Layout>
   );
 }
 

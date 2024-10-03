@@ -7,11 +7,11 @@ import { TQuestions } from "../../types/QuestionsType";
 import PopupBlogs from "../../atoms/Blogs/PopupBlogs";
 
 export interface IITEM {
-  _id: string;
+  _id?: string;
   title: string;
-  author: string;
-  date: string;
-  thumbnail: string;
+  date?: string;
+  thumbnail: string | File;
+  description:string, 
   body?: string | undefined | null;
 }
 
@@ -57,7 +57,6 @@ function Allblogs() {
 
   const mappedPopup = new Map();
   mappedPopup.set("popupData", [
-    popup?.author,
     popup?.body,
     popup?.thumbnail,
     popup?.title,

@@ -11,6 +11,7 @@ const FilteredBlogs: React.FC<{
   showData: (data: IITEM) => void;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ loading, filteredBlogs, handleDelete, showData, setQuery }) => {
+
   return (
     <>
       {loading ? (

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Layout from "../../layout/Layout";
 import { newDate } from "../../constants/fullDate.ts";
-import { apiURL } from "../../constants/URL.tsx";
 
 export interface IAUTHOR {
   name: string;
@@ -19,16 +18,6 @@ const Addblog = () => {
     title: "",
     description: "",
   });
-
-  const [authors, setAuthors] = useState<null | IAUTHOR[]>(null);
-
-  useEffect(() => {
-    fetch(`${apiURL}/authors`)
-      .then((res) => res.json())
-      .then((data) => setAuthors(data.data));
-  }, []);
-
-  console.log(authors);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement> | any) =>
     setThumnbail(e.target.files[0]);
@@ -49,7 +38,7 @@ const Addblog = () => {
       formData.append("description", form.description);
       formData.append("body", body);
 
-      const url = `${apiURL}/blogs/add`;
+      const url = `http://localhost:3001/api/v1/blogs/add`;
       await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -115,7 +104,6 @@ const Addblog = () => {
           />
         </div>
 
-
         <div className="mb-10">
           <span className="text-xl font-bold">Kover şəkli:</span>
           <input
@@ -141,7 +129,6 @@ const Addblog = () => {
 
         <button
           className="mt-10 px-6 rounded py-3 bg-black text-white"
-          
           type="submit"
         >
           Bloq əlavə et

@@ -24,10 +24,10 @@ const GridOfDemocrafis = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch("hhttps://pilgrimbackend.onrender.com/api/v1/scholarships"),
-      fetch("hhttps://pilgrimbackend.onrender.com/api/v1/questions"),
-      fetch("hhttps://pilgrimbackend.onrender.com/api/v1/users"),
-      fetch("hhttps://pilgrimbackend.onrender.com/api/v1/blogs"),
+      fetch("https://pilgrimbackend.onrender.com/api/v1/scholarships"),
+      fetch("https://pilgrimbackend.onrender.com/api/v1/questions"),
+      fetch("https://pilgrimbackend.onrender.com/api/v1/users"),
+      fetch("https://pilgrimbackend.onrender.com/api/v1/blogs"),
     ])
       .then((responses) => {
         return Promise.all(responses.map((response) => response.json()));

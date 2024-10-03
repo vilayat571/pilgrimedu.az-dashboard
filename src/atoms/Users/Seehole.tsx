@@ -36,7 +36,7 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
 
 
   const sendData=()=>{
-    const url = `http://localhost:3001/api/v1/users/edit/${user._id}`;
+    const url = `https://pilgrimbackend.onrender.com/api/v1/users/edit/${user._id}`;
     fetch(url, {
       method: "PUT",
       headers: {

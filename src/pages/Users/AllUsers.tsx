@@ -20,7 +20,7 @@ const AllUsers = () => {
   const [users, setAllUsers] = useState<IUSERS[] | null>(null);
 
   useEffect(() => {
-    const url = "http://localhost:3001/api/v1/users";
+    const url = "https://pilgrimbackend.onrender.com/api/v1/users";
     fetch(url)
       .then((res) => res.json())
       .then((data) => setAllUsers(data.users));

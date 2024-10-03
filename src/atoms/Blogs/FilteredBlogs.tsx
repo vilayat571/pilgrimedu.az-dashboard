@@ -2,16 +2,13 @@ import React from "react";
 import { IITEM } from "../../pages/Blogs/Allblogs";
 import NotResut from "../Layout/NotResut";
 
-// {loading, filteredBlogs, handleDelete, showData, setQuery}
-
 const FilteredBlogs: React.FC<{
   loading: boolean;
   filteredBlogs: IITEM[] | undefined;
-  handleDelete: (id: string) => void;
+  handleDelete: (id:any) => void;
   showData: (data: IITEM) => void;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ loading, filteredBlogs, handleDelete, showData, setQuery }) => {
-
   return (
     <>
       {loading ? (
@@ -27,13 +24,17 @@ const FilteredBlogs: React.FC<{
                 >
                   <img
                     className=" h-[200px] object-cover rounded-t rounded-b-none"
-                    src={item.thumbnail}
+                    src={
+                      item.thumbnail instanceof File
+                        ? URL.createObjectURL(item.thumbnail)
+                        : item.thumbnail || ""
+                    }
                     alt={`the image of ${item.title}`}
                   />
                   <div className="px-3 flex flex-col">
                     <p className="text-[15px] text-black flex gap-4 mt-3"></p>
-                    <p className="text-2xl font-semibold mt-3 mb-3">
-                      {item.title}
+                    <p className="text-2xl font-semibold mt-3 mb-3 line-clamp-1">
+                      {item.title}..
                     </p>
                     <div className="flex flex-row gap-4 mt-1">
                       <button

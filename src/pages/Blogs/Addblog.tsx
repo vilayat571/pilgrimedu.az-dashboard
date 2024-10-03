@@ -38,7 +38,7 @@ const Addblog = () => {
       formData.append("description", form.description);
       formData.append("body", body);
 
-      const url = `http://localhost:3001/api/v1/blogs/add`;
+      const url = `https://pilgrimbackend.onrender.com/api/v1/blogs/add`;
       await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

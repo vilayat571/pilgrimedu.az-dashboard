@@ -26,7 +26,7 @@ const Scholarships = () => {
 
   useEffect(() => {
     dispacth(fetchScholarships());
-  }, []);
+  }, [dispacth]);
 
   const [data, setData] = useState<IData | null>(null);
 

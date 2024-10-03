@@ -7,7 +7,7 @@ import { TQuestions } from "../../types/QuestionsType";
 import PopupBlogs from "../../atoms/Blogs/PopupBlogs";
 
 export interface IITEM {
-  _id?: string;
+  _id?: string | undefined;
   title: string;
   date?: string;
   thumbnail: string | File;
@@ -19,7 +19,7 @@ function Allblogs() {
   const [blogs, setBlogs] = useState<IITEM[] | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/v1/blogs`)
+    fetch(`https://pilgrimbackend.onrender.com/api/v1/blogs`)
       .then((res) => res.json())
       .then((data) => setBlogs(data.blogs));
   }, [setBlogs]);
@@ -28,12 +28,12 @@ function Allblogs() {
 
   const handleDelete = async (id: string) => {
     setLoading(true);
-    const url = `http://localhost:3001/api/v1/blogs/delete/${id}`;
+    const url = `https://pilgrimbackend.onrender.com/api/v1/blogs/delete/${id}`;
     await fetch(url, {
       method: "DELETE",
     })
       .then(() => {
-        fetch(`http://localhost:3001/api/v1/blogs`)
+        fetch(`https://pilgrimbackend.onrender.com/api/v1/blogs`)
           .then((res) => res.json())
           .then((data) => setBlogs(data.blogs));
       })

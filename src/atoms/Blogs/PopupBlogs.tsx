@@ -61,13 +61,13 @@ const PopupBlogs: React.FC<{
     formData.append("body", body || "");
     formData.append("description", editedBlog.description || "");
 
-    if (editedBlog.thumbnail) {
+    if (editedBlog.thumbnail instanceof File) {
       formData.append("thumbnail", editedBlog.thumbnail); // File input
     }
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/blogs/put/${popup?._id}`,
+        `https://pilgrimbackend.onrender.com/api/v1/blogs/put/${popup?._id}`,
         {
           method: "PUT",
           body: formData,
@@ -87,6 +87,13 @@ const PopupBlogs: React.FC<{
       [{ size: [] }],
       ["link", "image"],
     ],
+  };
+
+  const getImageSrc = () => {
+    if (editedBlog.thumbnail instanceof File) {
+      return URL.createObjectURL(editedBlog.thumbnail);
+    }
+    return editedBlog.thumbnail || "";
   };
 
   return (
@@ -113,7 +120,7 @@ const PopupBlogs: React.FC<{
                 type="text"
               />
             </label>
-            <label htmlFor="title" className="w-full">
+            <label htmlFor="description" className="w-full">
               <p className="text-2xl mb-4"> Açıqlama:</p>
               <input
                 onChange={(e) => handleChange(e)}
@@ -164,7 +171,7 @@ const PopupBlogs: React.FC<{
                   {popup.title}
                 </div>
                 <img
-                  src={popup.thumbnail || ""}
+                  src={getImageSrc()}
                   className="w-3/4 rounded h-[600px]  object-cover  border"
                   alt={`the image of ${popup.title}`}
                 />

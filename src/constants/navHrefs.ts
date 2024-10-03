@@ -29,16 +29,16 @@ export const hrefs: Route[] = [
   {
     id: 7,
     href: "/",
-    name: "Əsas statistika",
+    name: "Sayt göstəriciləri",
   },
   {
     id: 5,
     href: "/bloqelaveet",
-    name: "Bloq əlavə et",
+    name: "Yeni bloq əlavə et",
   },
   {
     id: 6,
     href: "/teqaudelaveet",
-    name: "Təqaüd əlavə et",
+    name: "Yeni təqaüd əlavə et",
   },
 ];

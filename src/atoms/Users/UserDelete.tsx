@@ -6,7 +6,7 @@ const UserDelete: React.FC<{
   setAllUsers: React.Dispatch<React.SetStateAction<IUSERS[] | null>>;
 }> = ({ id, setAllUsers }) => {
   const deleteUser = () => {
-    const url = `http://localhost:3001/api/v1/users/delete/${id}`;
+    const url = `https://pilgrimbackend.onrender.com/api/v1/users/delete/${id}`;
     fetch(url, {
       method: "DELETE",
     })

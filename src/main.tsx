@@ -10,7 +10,6 @@ import Scholarships from "./pages/Scholarships/Scholarships.tsx";
 import Addscholarship from "./pages/Scholarships/Addscholarship.tsx";
 import Addblog from "./pages/Blogs/Addblog.tsx";
 import Allblogs from "./pages/Blogs/Allblogs.tsx";
-import Singleblog from "./pages/Blogs/Singleblog.tsx";
 import AllUsers from "./pages/Users/AllUsers.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -24,7 +23,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/teqaudelaveet" element={<Addscholarship />} /> {/*  təqaüd əlavə et */}
           <Route path="/bloqelaveet" element={<Addblog />} /> {/* bloq əlavə et */}
           <Route path="/bloqlar" element={<Allblogs />} /> {/* bütün bloqlar */}
-          <Route path="/bloqlar/:id" element={<Singleblog />} /> {/* tək blog */}
           <Route path="/users" element={<AllUsers />} />  {/* istifadəçilər */}
         </Routes>
       </BrowserRouter>

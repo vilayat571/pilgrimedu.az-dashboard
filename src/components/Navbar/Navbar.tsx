@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/pilgrim_logo.png";
 import { hrefs, Route } from "../../constants/navHrefs";
+import Logo from "../../atoms/Layout/Logo";
 
 const Navbar = () => {
+
+  const logOut=()=>{
+
+  }
+
   return (
     <div className="bg-[#0F0916] text-white w-1/4 px-6 pt-16 h-screen flex-col items-start">
-      <Link to={"/"}>
-        <img src={logo} alt="The logo of Pilgrim MMC" className="mb-4 w-52" />
-      </Link>
+     <Logo />
 
       <div
         id="routes"
@@ -25,6 +28,11 @@ const Navbar = () => {
             </Link>
           );
         })}
+      </div>
+      <div className="absolute bottom-8 left-8 ">
+        <button 
+        onClick={()=>logOut()}
+        className="text-black bg-white px-5 py-3 rounded">Sistemi bağla</button>
       </div>
     </div>
   );

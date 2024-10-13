@@ -37,9 +37,9 @@ const GridOfDemocrafis = () => {
         const icons = [faGraduationCap, faQuestion, faUser, faBlog];
         const texts = [
           "Saytda olan toplam təqaüd proqramı:",
-          "Saytda olan toplam sual proqramı:",
-          "Saytda olan toplam istifadəçi proqramı:",
-          "Saytda olan toplam bloq proqramı:",
+          "Saytda olan toplam sual sayı:",
+          "Saytda olan toplam istifadəçi sayı:",
+          "Saytda olan toplam bloq yazısı:",
         ];
 
         const paths = [

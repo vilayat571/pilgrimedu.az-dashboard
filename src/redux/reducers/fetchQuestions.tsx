@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiURL } from "../../constants/URL";
 
 export interface IQuestions {
   username: string;
@@ -18,7 +17,7 @@ export interface IinitialState {
 }
 
 export const getQuestion = createAsyncThunk("/getQuestion", async () => {
-  const url = `${apiURL}/questions`;
+  const url = `http://localhost:3001/api/v1/questions`;
 
   console.log(url);
 

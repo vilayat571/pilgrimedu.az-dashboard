@@ -2,15 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import fetchQuestions from "../reducers/fetchQuestions";
 import removeItem from "../reducers/removeItem";
-import questionsCount from "../reducers/questionsCount";
 import getAllscholarships from "../reducers/getAllscholarships";
+import fetchBlogs from "../reducers/fetchBlogs";
 
 export const store = configureStore({
   reducer: {
-    fetchQuestions:fetchQuestions,
-    removeItem:removeItem,
-    questionsCount:questionsCount,
-    getAllscholarships:getAllscholarships
+    fetchQuestions: fetchQuestions,
+    fetchBlogs: fetchBlogs,
+    removeItem: removeItem,
+    getAllscholarships: getAllscholarships,
   },
 });
 

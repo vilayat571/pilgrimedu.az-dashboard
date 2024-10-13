@@ -1,37 +1,47 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowCircleLeft,
+  faBookmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
-import { IITEM } from "../../pages/Blogs/Allblogs";
-import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
+import { IITEM } from "../../redux/reducers/fetchBlogs";
+import { toast, ToastContainer } from "react-toastify";
 
 const PopupBlogs: React.FC<{
   popup: IITEM | null;
+  setBlogs: React.Dispatch<React.SetStateAction<IITEM[] | null>>;
   setPopup: React.Dispatch<React.SetStateAction<IITEM | null>>;
-}> = ({ popup, setPopup }) => {
-  const navigate = useNavigate();
+}> = ({ popup, setPopup, setBlogs }) => {
   const goBack = () => {
-    navigate(-1);
+    setEdit(false);
   };
 
   const [edit, setEdit] = useState(false);
-  const [body, setBody] = useState(popup?.body || "");
+  const [body, setBody] = useState<unknown>(popup?.body);
 
   const [editedBlog, setEditedBlog] = useState<IITEM>({
-    title: popup?.title || "",
-    thumbnail: popup?.thumbnail || "",
-    description: popup?.description || "",
+    title: popup?.title,
+    description: popup?.description,
   });
+
+  const [popupData, setPopupData] = useState<IITEM | null>(popup);
+
+  const [thumbnail, setThumbnail] = useState<File | string | undefined>(
+    popup?.thumbnail
+  );
 
   // Update the state when popup changes
   useEffect(() => {
+    setPopupData(popup);
     if (popup) {
       setEditedBlog({
-        title: popup.title || "",
-        thumbnail: popup.thumbnail || "",
-        description: popup?.description || "",
+        title: popup.title,
+        thumbnail: popup.thumbnail,
+        description: popup?.description,
       });
-      setBody(popup.body || "");
+      setBody(popup.body);
+      setThumbnail(popup.thumbnail); // Ensure the current thumbnail is set
     }
   }, [popup]);
 
@@ -46,8 +56,22 @@ const PopupBlogs: React.FC<{
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const selectedFile = e.target.files[0];
-      setEditedBlog({ ...editedBlog, thumbnail: selectedFile });
-      console.log(editedBlog.thumbnail);
+      setThumbnail(selectedFile);
+    } else {
+      setThumbnail(popup?.thumbnail);
+    }
+  };
+
+  const isChanged = () => {
+    if (
+      popup?.body == body &&
+      popup?.description == editedBlog.description &&
+      popup?.title == editedBlog.title &&
+      thumbnail == editedBlog.thumbnail
+    ) {
+      return false;
+    } else {
+      return true;
     }
   };
 
@@ -57,24 +81,43 @@ const PopupBlogs: React.FC<{
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("title", editedBlog.title);
+    formData.append("title", editedBlog.title || "");
     formData.append("body", body || "");
     formData.append("description", editedBlog.description || "");
-
-    if (editedBlog.thumbnail instanceof File) {
-      formData.append("thumbnail", editedBlog.thumbnail); // File input
-    }
+    formData.append("thumbnail", thumbnail || ""); // File input
 
     try {
-      const response = await fetch(
-        `https://pilgrimbackend.onrender.com/api/v1/blogs/put/${popup?._id}`,
-        {
-          method: "PUT",
-          body: formData,
-        }
-      );
-      const result = await response.json();
-      console.log(result);
+      const value = isChanged();
+      if (value) {
+        const response = await fetch(
+          `http://localhost:3001/api/v1/blogs/put/${popup?._id}`,
+          {
+            method: "PUT",
+            body: formData,
+          }
+        );
+        const result = await response.json();
+        toast(result.message, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          style: {
+            backgroundColor: result.status == "OK" ? "green" : "red",
+            color: "white",
+            top: "20px",
+            fontFamily: "Oceanwide",
+          },
+        });
+        result.status == "OK" && setBlogs(result.blogs);
+        result.status == "OK" && setPopupData(result.editedBlog);
+      } else {
+        alert("Hər hansı bir dəyişiklik yoxdur!");
+      }
+      // console.log(formData, popup)
     } catch (error) {
       console.error("Error while updating blog:", error);
     }
@@ -90,30 +133,53 @@ const PopupBlogs: React.FC<{
   };
 
   const getImageSrc = () => {
-    if (editedBlog.thumbnail instanceof File) {
-      return URL.createObjectURL(editedBlog.thumbnail);
+    if (thumbnail instanceof File) {
+      return URL.createObjectURL(thumbnail);
     }
-    return editedBlog.thumbnail || "";
+    return thumbnail;
   };
 
   return (
     <>
       {edit ? (
-        <div className="flex fixed bg-[#fff] left-0 top-0 w-full h-screen pt-24 items-start py-6 justify-center">
-          <div className="flex items-start w-3/4 gap-y-12 flex-col pt-6">
+        <div className="flex fixed bg-[#fff] left-0 top-0 overflow-x-hidden w-full h-screen pb-[200px] pt-12 items-start justify-center">
+          <ToastContainer />
+          <FontAwesomeIcon
+            icon={faArrowCircleLeft}
+            onClick={() => {
+              setEdit(false), window.scrollTo(0, 0);
+            }}
+            className="absolute right-12 px-5 py-4 text-2xl cursor-pointer top-6
+              border-[1px] border-[#767676] transition duration-300 hover:border-red-600
+              hover:bg-red-600 hover:text-white  text-black rounded"
+          />
+          <div className="flex items-start w-4/5  gap-y-12 flex-col pt-6">
+            <p className="text-3xl bg-black text-white px-4 py-3 rounded">
+              Bloqda yeniləmə et:
+            </p>
             <label htmlFor="file">
-              <p className="text-2xl mb-4"> Şəkil:</p>
+              <p className="text-2xl mb-4">Şəkil:</p>
               <input
                 onChange={(e) => handleFileChange(e)}
                 id="thumbnail"
                 type="file"
               />
+              {thumbnail && typeof thumbnail === "string" && (
+                <div className="mt-4 text-lg">
+                  <p>Cari şəkil:</p>
+                  <img
+                    src={thumbnail}
+                    alt="Current thumbnail"
+                    className="w-20 mt-1 h-20 object-cover rounded"
+                  />
+                </div>
+              )}
             </label>
             <label htmlFor="title" className="w-full">
-              <p className="text-2xl mb-4"> Başlıq:</p>
+              <p className="text-2xl mb-4">Başlıq:</p>
               <input
                 onChange={(e) => handleChange(e)}
-                className=" w-full px-5 py-4 rounded bg-[#DADADA]"
+                className="w-full px-5 py-4 rounded bg-[#DADADA]"
                 placeholder="Başlıq"
                 id="title"
                 value={editedBlog.title}
@@ -121,10 +187,10 @@ const PopupBlogs: React.FC<{
               />
             </label>
             <label htmlFor="description" className="w-full">
-              <p className="text-2xl mb-4"> Açıqlama:</p>
+              <p className="text-2xl mb-4">Açıqlama:</p>
               <input
                 onChange={(e) => handleChange(e)}
-                className=" w-full px-5 py-4 rounded bg-[#DADADA]"
+                className="w-full px-5 py-4 rounded bg-[#DADADA]"
                 placeholder="Açıqlama"
                 id="description"
                 value={editedBlog.description}
@@ -132,67 +198,91 @@ const PopupBlogs: React.FC<{
               />
             </label>
             <label htmlFor="body" className="w-full">
-              <p className="text-2xl mb-4"> Mətn:</p>
+              <p className="text-2xl mb-4">Mətn:</p>
               <ReactQuill
                 theme="snow"
                 value={body}
+                id="body"
                 className="mt-3 h-60"
                 onChange={setBody}
                 modules={modules}
               />
             </label>
-            <div className="text-base font-semibold text-justify px-5 w-3/4 mt-8 tracking-wider leading-[35px]">
+
+            <div className="text-base gap-4 flex font-semibold text-justify px-2 mt-8 tracking-wider leading-[35px]">
               <button
-                onClick={() => goBack()}
-                className="px-7 py-2 rounded text-white bg-black"
+                onClick={() => {
+                  goBack(), window.scrollTo(0, 0);
+                }}
+                className="text-lg rounded-[3px]
+                  hover:bg-[#210442] hover:text-white transition duration-200 hover:border-[#210442]
+                  border-[1px] border-[#b3b3b3]
+                 px-8 py-4"
               >
                 Geri dön
               </button>
               <button
                 onClick={(e) => sendEditedBlog(e)}
-                className="px-7 py-2 rounded text-white bg-green-600 ml-5"
+                className="text-lg rounded-[3px]
+                  hover:bg-green-600 hover:text-white transition duration-200 hover:border-green-600
+                  border-[1px] border-[#b3b3b3]
+                 px-8 py-4"
               >
-                Göndər
+                Bloqu yenilə
               </button>
             </div>
           </div>
         </div>
       ) : (
-        popup != null && (
-          <div className="flex fixed bg-white left-0 top-0 w-full h-auto pt-24 items-center pb-12 justify-center">
+        popupData != null && (
+          <div className="flex fixed bg-white left-0 top-0 w-full h-auto pt-24 items-center pb-[200px] overflow-x-hidden justify-center">
             <FontAwesomeIcon
-              icon={faTimes}
+              icon={faArrowCircleLeft}
               onClick={() => setPopup(null)}
-              className="absolute right-4 px-5 py-4 text-lg cursor-pointer top-4 bg-red-600 text-white rounded"
+              className="absolute right-12 px-5 py-4 text-2xl cursor-pointer top-6
+              border-[1px] border-[#767676] transition duration-300 hover:border-red-600
+              hover:bg-red-600 hover:text-white  text-black rounded"
             />
-            <div className="flex flex-col px-4 py-5 w-full items-center justify-center h-auto rounded">
+            <div className="flex flex-col px-4 py-5 w-3/4 items-start justify-center h-auto rounded">
+              <p className="text-3xl bg-[#210442] cursor-pointer text-white px-4 py-3 rounded text-left mb-6">
+                Cari bloq:
+              </p>
+
               <div className="w-full flex items-center flex-col justify-center ">
-                <div className="mt-5 mb-6 px-6 text-3xl w-3/4 text-left ">
-                  {popup.title}
-                </div>
                 <img
                   src={getImageSrc()}
-                  className="w-3/4 rounded h-[600px]  object-cover  border"
-                  alt={`the image of ${popup.title}`}
+                  className="w-full rounded h-[600px] border object-cover"
+                  alt={`the image of ${popupData.title}`}
                 />
-                <div className="text-3xl font-semibold text-justify px-5 w-3/4 mt-8 tracking-wider leading-[35px]">
-                  {popup.title}
+                <div className="text-xl text-left w-full  tracking-wider mt-10 mb-3 leading-[40px]">
+                  <span className="text-[#210442] text-3xl ml-6 mr-2 rounded ">
+                    <FontAwesomeIcon icon={faBookmark} />
+                  </span>
+                  {popupData.title}
                 </div>
                 <div
-                  className="text-lg text-justify w-3/4 mt-3 tracking-wider leading-[35px] px-5"
-                  dangerouslySetInnerHTML={{ __html: popup.body || "" }}
+                  className="text-base text-justify  mt-3 tracking-wider leading-[35px] px-2"
+                  dangerouslySetInnerHTML={{ __html: popupData.body || "" }}
                 />
               </div>
-              <div className="text-base font-semibold text-justify px-5 w-3/4 mt-8 tracking-wider leading-[35px]">
+              <div className="text-base gap-4 flex font-semibold text-justify px-2 mt-8 tracking-wider leading-[35px]">
                 <button
-                  onClick={() => goBack()}
-                  className="px-7 py-2 rounded text-white bg-black"
+                  onClick={() => setPopup(null)}
+                  className="text-lg rounded-[3px]
+                  hover:bg-[#210442] hover:text-white transition duration-200 hover:border-[#210442]
+                  border-[1px] border-[#b3b3b3]
+                 px-8 py-4"
                 >
                   Geri dön
                 </button>
                 <button
-                  onClick={() => setEdit(!edit)}
-                  className="px-7 py-2 rounded text-white bg-green-600 ml-5"
+                  onClick={() => {
+                    setEdit(!edit), window.scrollTo(0, 0);
+                  }}
+                  className="text-lg rounded-[3px]
+                  hover:bg-green-600 hover:text-white transition duration-200 hover:border-green-600
+                  border-[1px] border-[#b3b3b3]
+                 px-8 py-4"
                 >
                   Düzəliş et
                 </button>

@@ -1,1 +1,1 @@
-export const apiURL='https://pilgrim-backend.onrender.com/api/v1'
+export const apiURL='http://localhost:3001/api/v1/'

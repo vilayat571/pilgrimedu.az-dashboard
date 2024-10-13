@@ -1,14 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiURL } from "../../constants/URL";
+
+export interface IITEM {
+    _id?: string | undefined;
+    title?: string;
+    date?: string;
+    thumbnail?: string | File;
+    description?:string, 
+    body?: string | undefined | null;
+  }
 
 export interface IinitialState {
-  count: number | string | null;
+  blogs: IITEM[] | null;
   loading: boolean;
   error: string | null | undefined;
 }
 
-export const countOfQuestions = createAsyncThunk("/getCount", async () => {
-  const url = `${apiURL}/questions`;
+export const getBlogs = createAsyncThunk("/getBlogs", async () => {
+  const url = `http://localhost:3001/api/v1/blogs`;
 
   const response = await fetch(url, {
     method: "GET",
@@ -25,32 +33,33 @@ export const countOfQuestions = createAsyncThunk("/getCount", async () => {
 });
 
 const initialState: IinitialState = {
-  count: null,
+  blogs: null,
   error: "",
   loading: false,
 };
 
-const questionsCount = createSlice({
-  name: "questionsCount",
+const fetchBlogs = createSlice({
+  name: "fetchBlogs",
   reducers: {},
   initialState,
   extraReducers(builder) {
-    builder.addCase(countOfQuestions.pending, (state) => {
+    builder.addCase(getBlogs.pending, (state) => {
       state.error = null;
-      state.count = null;
+      state.blogs = null;
       state.loading = true;
     });
-    builder.addCase(countOfQuestions.fulfilled, (state, action) => {
+    builder.addCase(getBlogs.fulfilled, (state, action) => {
       state.error = null;
-      state.count = action.payload.count;
+      console.log(action.payload)
+      state.blogs = action.payload.blogs;
       state.loading = false;
     });
-    builder.addCase(countOfQuestions.rejected, (state, action) => {
+    builder.addCase(getBlogs.rejected, (state, action) => {
       state.error = action.error.message;
-      state.count = null;
+      state.blogs = null;
       state.loading = false;
     });
   },
 });
 
-export default questionsCount.reducer;
+export default fetchBlogs.reducer;

@@ -1,14 +1,16 @@
 interface ITitle {
   text: string;
-  dat: number | undefined | string | null;
+  count: number | undefined | string | null;
 }
 
-const Title: React.FC<ITitle> = ({ text, dat }) => {
+const Title: React.FC<ITitle> = ({ text, count }) => {
   return (
-    <div className="flex mb-8 mt-12">
+    <div className="flex mb-4 mt-12">
       <p className="text-[#000] text-4xl ">
-        <span>{text}</span>
-        <span>{dat}</span>
+        <span>Saytda </span>
+        <span>{count} </span>
+        <span>{text} </span>
+        <span>mövcuddur:</span>
       </p>
     </div>
   );

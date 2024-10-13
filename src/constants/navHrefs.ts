@@ -23,12 +23,12 @@ export const hrefs: Route[] = [
   },
   {
     id: 4,
-    href: "/users",
+    href: "/istifadechiler",
     name: "İstifadəçilər",
   },
   {
     id: 7,
-    href: "/",
+    href: "/statistika",
     name: "Sayt göstəriciləri",
   },
   {

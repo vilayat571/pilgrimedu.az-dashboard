@@ -13,8 +13,8 @@ const SearchQuestions:React.FC<ISearchQuestions>=({query, changeValue})=> {
     <form autoComplete="off">
       <input
         type="search"
-        onChange={(e) => changeValue(e)}
-        placeholder="Ad daxil edin..."
+        onChange={changeValue}
+        placeholder="Açar söz daxil edin..."
         id="username"
         value={query}
         className="mb-6 h-1 px-2 py-[36px] rounded-l text-[#000000] 

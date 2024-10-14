@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { IUSERS } from "../../pages/Users/AllUsers";
 import { degrees, services, statuses } from "../../constants/formDetails";
+import { IUSERS } from "../../redux/reducers/fetchUsers";
 
 const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
   const [data, setData] = useState<IUSERS | null>(null);
@@ -70,28 +70,27 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
     <>
       {data != null && (
         <div className="fixed top-0 left-0 w-full flex items-center justify-center h-screen bg-white">
-          <div className="w-1/2 bg-[#DADADA] rounded flex-col gap-y-5 flex px-8 py-8">
+          <div className="w-1/2 border-[1px] border-[#b0b0b0] rounded flex-col gap-y-5 flex px-8 py-8">
             {caseEdit ? (
-              <form className="flex flex-col gap-y-2">
+              <form 
+              onChange={(e)=>handleChange(e)}
+              className="flex flex-col bg-white gap-y-2">
                 <input
-                  className="px-4 py-5 outline-none border-none rounded w-full"
+                  className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="username"
                   autoFocus={true}
-                  onChange={handleChange}
                   value={details.username} // Bound to `details`
                   type="text"
                 />
                 <input
-                  className="px-4 py-5 outline-none border-none rounded w-full"
+                  className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="email"
-                  onChange={handleChange}
                   value={details.email} // Bound to `details`
                   type="text"
                 />
                 <input
-                  className="px-4 py-5 outline-none border-none rounded w-full"
+                  className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="phone"
-                  onChange={handleChange}
                   value={details.phone} // Bound to `details`
                   type="text"
                 />
@@ -99,7 +98,7 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
                 <select
                   value={formOptions.degree}
                   onChange={(e) => chooseOption(e)}
-                  className="px-4 py-5 outline-none border-none rounded w-full"
+                  className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="degree"
                 >
                   <option key={"1131"} value={user.degree}>
@@ -116,7 +115,7 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
                 <select
                   value={formOptions.service}
                   onChange={(e) => chooseOption(e)}
-                  className="px-4 py-5 outline-none border-none rounded w-full"
+                  className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="service"
                 >
                   <option key={"111"} value={user.service}>
@@ -133,7 +132,7 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
                 <select
                   value={formOptions.status}
                   onChange={(e) => chooseOption(e)}
-                  className="px-4 py-5 outline-none border-none rounded w-full"
+                  className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="status"
                 >
                   {allStatuses.map((status) => {
@@ -147,22 +146,22 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
               </form>
             ) : (
               <>
-                <span className="px-4 py-5 outline-none border-none rounded w-full bg-white">
+                <span className="px-4 py-5 border-[1px] border-[#fff] outline-none  rounded w-full bg-white">
                   İstifadəçi : {data?.username}
                 </span>
-                <span className="px-4 py-5 outline-none border-none rounded w-full bg-white">
+                <span className="px-4 py-5 border-[1px] border-[#fff] outline-none  rounded w-full bg-white">
                   E-poçt : {data?.email}
                 </span>
-                <span className="px-4 py-5 outline-none border-none rounded w-full bg-white">
+                <span className="px-4 py-5 border-[1px] border-[#fff] outline-none  rounded w-full bg-white">
                   Əlaqə nömrəsi : {data?.phone}
                 </span>
-                <span className="px-4 py-5 outline-none border-none rounded w-full bg-white">
+                <span className="px-4 py-5 border-[1px] border-[#fff] outline-none  rounded w-full bg-white">
                   Təhsil səviyyəsi : {data?.degree}
                 </span>
-                <span className="px-4 py-5 outline-none border-none rounded w-full bg-white">
+                <span className="px-4 py-5 border-[1px] border-[#fff] outline-none  rounded w-full bg-white">
                   Göstərilən xidmət : {data?.service}
                 </span>
-                <span className="px-4 py-5 outline-none border-none rounded w-full bg-white">
+                <span className="px-4 py-5 border-[1px] border-[#fff] outline-none  rounded w-full bg-white">
                   Cari vəziyyət : {data?.status}
                 </span>
               </>
@@ -170,8 +169,10 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
             <div className="mt-1">
               <button
                 onClick={() => setData(null)}
-                className="bg-red-500 text-white px-4 py-3 w-28 rounded"
-              >
+                className="text-base rounded-[3px]
+                hover:bg-red-600 hover:text-white transition duration-200 hover:border-red-600
+                border-[1px] border-[#b3b3b3]
+               px-5 py-3"              >
                 Bağla
               </button>
               {caseEdit && (
@@ -204,8 +205,10 @@ const Seehole: React.FC<{ user: IUSERS }> = ({ user }) => {
       )}
       <button
         onClick={handleSeeHole}
-        className="px-5 py-2 rounded bg-[#210442] text-white"
-      >
+        className="text-base rounded-[3px]
+        hover:bg-[#210442] hover:text-white transition duration-200 hover:border-[#210442]
+        border-[1px] border-[#b3b3b3]
+       px-5 py-3"      >
         Tam bax
       </button>
     </>

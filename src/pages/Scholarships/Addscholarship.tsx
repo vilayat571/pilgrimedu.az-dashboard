@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import Layout from "../../layout/Layout";
 import Statustitle from "../../atoms/Scholarships/Statustitle";
 import { apiURL } from "../../constants/URL";
+import {
+  options,
+  typeOfscholarships,
+} from "../../constants/scholarshipsDetails";
 
 function Addscholarship() {
   const [scform, setScform] = useState({
@@ -160,17 +164,9 @@ function Addscholarship() {
               value={scform.region}
               id="region"
             >
-              <option value="Regionlar">Regionlar</option>
-              <option value="Avropa">Avropa</option>
-              <option value="Amerika və kanada">Amerika və kanada</option>
-              <option value="Asiya">Asiya</option>
-              <option value="İngiltərə">İngiltərə</option>
-              <option value="Rusiya və postsovet ölkələri">
-                Rusiya və postsovet ölkələri
-              </option>
-              <option value="Türkiyə və müsəlman ölkələri">
-                Türkiyə və müsəlman ölkələri
-              </option>
+              {options.map((option) => {
+                return <option value={option.value}>{option.label}</option>;
+              })}
             </select>
           </div>
 
@@ -185,14 +181,9 @@ function Addscholarship() {
               value={scform.type}
               id="type"
             >
-              <option value="Təqaüdün tipi">Təqaüdün tipi</option>
-              <option value="Tam maliyyələşdirilmiş">
-                Tam maliyyələşdirilmiş
-              </option>
-              <option value="Tam maliyyələşdirilmiş">
-                Yarım maliyyələşdirilmiş
-              </option>
-              <option value="Endirimli">Endirimli</option>
+              {typeOfscholarships.map((option) => {
+                return <option value={option.value}>{option.label}</option>;
+              })}
             </select>
           </div>
 

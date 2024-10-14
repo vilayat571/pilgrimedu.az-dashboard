@@ -9,6 +9,7 @@ import Popupquestions from "../../atoms/Questions/Popupquestions";
 import { IQuestions, TQuestions } from "../../types/QuestionsType";
 import NotfoundData from "../../atoms/Layout/NotfoundData";
 import NotResut from "../../atoms/Layout/NotResut";
+import Title from "../../atoms/Layout/Title";
 
 function Questions() {
   const dispatch = useAppDispatch();
@@ -60,9 +61,9 @@ function Questions() {
   return (
     <Layout>
       {loading ? (
-        <div className="w-full h-screen flex items-center justify-center text-5xl text-center">
-          <p className="relative bottom-20">Məlumatlar yüklənir..</p>
-        </div>
+     <div className="w-full h-screen flex items-center justify-center text-3xl text-center">
+     <p className="relative bottom-20 bg-[#210442] px-5 py-3 rounded text-white">Məlumatlar yüklənir..</p>
+   </div>
       ) : (
         <>
           {questions?.length == 0 ? (
@@ -71,8 +72,8 @@ function Questions() {
             </div>
           ) : (
             <>
-              <TitleOfQuestions />
-              {text.length > 0 && (
+          <Title text="istifadəçi sualı " count={questions?.length} />
+          {text.length > 0 && (
                 <div className="absolute right-12 top-12 text-lg bg-green-600 text-white px-5 py-3 rounded">
                   {text}
                 </div>

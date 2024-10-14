@@ -19,13 +19,15 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/statistika" element={<App />} />
           <Route path="/suallar" element={<Questions />} />
+          <Route path="/bloqlar" element={<Allblogs />} />
           <Route path="/teqaudler" element={<Scholarships />} />
+
+          <Route path="/istifadechiler" element={<AllUsers />} />
+
+          <Route path="/statistika" element={<App />} />
           <Route path="/teqaudelaveet" element={<Addscholarship />} />
           <Route path="/bloqelaveet" element={<Addblog />} />
-          <Route path="/bloqlar" element={<Allblogs />} />
-          <Route path="/istifadechiler" element={<AllUsers />} />
         </Routes>
       </BrowserRouter>
     </Provider>

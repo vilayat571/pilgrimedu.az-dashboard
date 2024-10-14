@@ -1,16 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { hrefs, Route } from "../../constants/navHrefs";
 import Logo from "../../atoms/Layout/Logo";
+import { toast, ToastContainer } from "react-toastify";
 
 const Navbar = () => {
+  const navigate = useNavigate();
 
-  const logOut=()=>{
-
-  }
+  const logOut = () => {
+    const question = confirm("Sistemi bağlamaq istəyirsiniz?");
+    if (question) {
+      localStorage.clear();
+    }
+    toast("Sistemdən çıxdınız!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      style: {
+        backgroundColor: "green",
+        color: "white",
+        top: "20px",
+        fontFamily: "Oceanwide",
+      },
+    });
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
 
   return (
     <div className="bg-[#0F0916] text-white w-1/4 px-6 pt-16 h-screen flex-col items-start">
-     <Logo />
+      <ToastContainer />
+      <Logo />
 
       <div
         id="routes"
@@ -30,9 +54,12 @@ const Navbar = () => {
         })}
       </div>
       <div className="absolute bottom-8 left-8 ">
-        <button 
-        onClick={()=>logOut()}
-        className="text-black bg-white px-5 py-3 rounded">Sistemi bağla</button>
+        <button
+          onClick={() => logOut()}
+          className="text-black bg-white px-5 py-3 rounded"
+        >
+          Sistemi bağla
+        </button>
       </div>
     </div>
   );

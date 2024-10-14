@@ -24,7 +24,9 @@ const AllUsers = () => {
   }, [setAllUsers, dispatch]);
 
   const filteredUsers = users?.filter((user) => {
-    return user.username.toLowerCase().includes(query.toLowerCase());
+    return (user.username + user.email)
+      .toLowerCase()
+      .includes(query.toLowerCase());
   });
 
   return (
@@ -38,7 +40,9 @@ const AllUsers = () => {
       ) : (
         <>
           <div className="pt-0">
+            
             <Title text="istifadəçi" count={users?.length} />
+
             <ToastContainer />
 
             <SearchQuestions query={query} changeValue={changeInpvalues} />
@@ -64,14 +68,34 @@ const AllUsers = () => {
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <UserDelete id={user._id} setAllUsers={setAllUsers} />
-                        <Seehole user={user} />
+                        <UserDelete
+                          setQuery={setQuery}
+                          id={user._id}
+                          setAllUsers={setAllUsers}
+                        />
+                        <Seehole
+                          setQuery={setQuery}
+                          setAllUsers={setAllUsers}
+                          user={user}
+                        />
                       </div>
                     </div>
                   );
                 })
               ) : (
-                <div className="text-3xl ">Yüklənir..</div>
+                <div className="flex flex-col items-start gap-y-3 px-2">
+                  <p className="text-3xl">
+                    Təəssüf ki, axtarışa uyğun <br /> istifadəçi tapılmadı.
+                  </p>
+                  <button
+                    onClick={() => setQuery("")}
+                    className="text-base rounded-[3px] bg-white text-black
+                hover:bg-red-600 hover:text-white transition duration-200
+               px-5 py-3"
+                  >
+                    Yenidən axtar
+                  </button>
+                </div>
               )}
             </div>
           </div>

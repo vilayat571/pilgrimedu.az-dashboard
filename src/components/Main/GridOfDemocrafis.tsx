@@ -24,10 +24,10 @@ const GridOfDemocrafis = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch("https://pilgrimbackend.onrender.com/api/v1/scholarships"),
-      fetch("https://pilgrimbackend.onrender.com/api/v1/questions"),
-      fetch("https://pilgrimbackend.onrender.com/api/v1/users"),
-      fetch("https://pilgrimbackend.onrender.com/api/v1/blogs"),
+      fetch("http://localhost:3001/api/v1/scholarships"),
+      fetch("http://localhost:3001/api/v1/questions"),
+      fetch("http://localhost:3001/api/v1/users"),
+      fetch("http://localhost:3001/api/v1/blogs"),
     ])
       .then((responses) => {
         return Promise.all(responses.map((response) => response.json()));
@@ -45,8 +45,8 @@ const GridOfDemocrafis = () => {
         const paths = [
           "/teqaudler",
           "/suallar",
-          "/users",
-          "bloqlar",
+          "/istifadechiler",
+          "/bloqlar",
         ];
         
         const newArray = data.map((item: ICounts, index: number) => {

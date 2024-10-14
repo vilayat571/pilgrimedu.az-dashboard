@@ -146,6 +146,7 @@ const Login = () => {
       <div className="flex flex-col items-center w-full">
         <Logo />
         <form
+          autoComplete="off"
           onSubmit={(e) => handleLogin(e)}
           onChange={(e) => handleChange(e)}
           className="lg:w-2/5 z-10 xl:w-1/3 md:w-7/10 sm:w-11/12 flex flex-col items-center mt-6"
@@ -157,7 +158,7 @@ const Login = () => {
              placeholder:text-[#343434] indent-3 tracking-wide outline-none focus:outline-none"
             placeholder="Sistem adı"
             required={true}
-            type="text"  // Change to "text" instead of "username"
+            type="text" // Change to "text" instead of "username"
           />
           <input
             id="password"
@@ -177,9 +178,7 @@ const Login = () => {
             Şifrəni göstər
           </p>
           <div className="flex flex-col items-center gap-2 tracking-wider">
-            <button
-              className="bg-[#fff] text-black rounded w-auto text-center px-6 mt-7 py-3"
-            >
+            <button className="bg-[#fff] text-black rounded w-auto text-center px-6 mt-7 py-3">
               Sistemə gir
             </button>
           </div>

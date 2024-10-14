@@ -1,11 +1,14 @@
 import React from "react";
 import { IUSERS } from "../../redux/reducers/fetchUsers";
-import { toast, ToastContainer } from "react-toastify";
+import useAlert from "../../hooks/useAlert";
 
 const UserDelete: React.FC<{
   id: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
   setAllUsers: React.Dispatch<React.SetStateAction<IUSERS[] | null>>;
-}> = ({ id, setAllUsers }) => {
+}> = ({ id, setAllUsers, setQuery }) => {
+  const { message, setMessage } = useAlert("");
+
   const deleteUser = () => {
     const url = `http://localhost:3001/api/v1/users/delete/${id}`;
     fetch(url, {
@@ -13,27 +16,30 @@ const UserDelete: React.FC<{
     })
       .then((res) => res.json())
       .then((data) => {
-        setAllUsers(data.users),
-          toast(data.message, {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: false,
-            progress: undefined,
-            style: {
-              backgroundColor: data.status == "OK" ? "green" : "red",
-              color: "white",
-              fontFamily: "Oceanwide",
-            },
-          });
-      });
+        setQuery("");
+
+        if (data.status === "OK") {
+          setAllUsers(data.users);
+          setMessage("İstifadəçi silinmişdir!");
+        } else {
+          setMessage("Xəta baş verdi!");
+        }
+      })
   };
 
   return (
     <>
-      <ToastContainer />
+      {message.length > 0 && (
+        <div
+          className={`
+  absolute top-6 right-6 tracking-wider ${
+    !message.toLowerCase().includes("xəta") ? "bg-red-600 " : "bg-green-600"
+  } text-white px-5 py-3 rounded
+  `}
+        >
+          {message}
+        </div>
+      )}
       <button
         onClick={() => deleteUser()}
         className="text-base rounded-[3px]

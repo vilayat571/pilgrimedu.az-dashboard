@@ -8,9 +8,9 @@ interface ILayout {
 }
 
 const Layout: React.FC<ILayout> = ({ children }) => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
-  useEffect(() => {
+  /* useEffect(() => {
     const token = localStorage.getItem("token");
     
     if (!token) {
@@ -27,7 +27,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         navigate("/");
       }
     }
-  }, [navigate]);
+  }, [navigate]); */
 
   return (
     <motion.div

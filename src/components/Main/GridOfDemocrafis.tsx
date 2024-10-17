@@ -1,5 +1,5 @@
 import CountsOfParts from "./CountsOfParts";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch } from "../../redux/store/store";
 import {
   faBlog,
@@ -12,11 +12,13 @@ import {
 interface ICounts {
   count: number;
   text: string;
-  path:string,
+  path: string;
   icon: IconDefinition;
 }
 
-const GridOfDemocrafis = () => {
+const GridOfDemocrafis: React.FC<{
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ setLoading }) => {
   const dispatch = useAppDispatch();
 
   // Initialize countsData as an array of ICounts objects
@@ -42,26 +44,21 @@ const GridOfDemocrafis = () => {
           "Saytda olan toplam bloq yazısı:",
         ];
 
-        const paths = [
-          "/teqaudler",
-          "/suallar",
-          "/istifadechiler",
-          "/bloqlar",
-        ];
-        
+        const paths = ["/teqaudler", "/suallar", "/istifadechiler", "/bloqlar"];
+
         const newArray = data.map((item: ICounts, index: number) => {
           return {
-            count: item.count,   
-            text: texts[index],  
-            icon: icons[index],  
-            path:paths[index],
-
+            count: item.count,
+            text: texts[index],
+            icon: icons[index],
+            path: paths[index],
           };
         });
         setCountsData(newArray);
+     //   setLoading(false);
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, [dispatch]);
+  }, [dispatch, setLoading]);
 
   return (
     <div className="grid grid-cols-1 gap-4 w-full mt-4">

@@ -99,7 +99,7 @@ const Login = () => {
           // Redirect to /statistika after 1 second
           setTimeout(() => {
             navigate("/statistika");
-          }, 1000);
+          }, 2000);
         } else {
           toast(data.message, {
             position: "top-right",

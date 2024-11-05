@@ -16,7 +16,7 @@ export interface IinitialState {
 }
 
 export const getBlogs = createAsyncThunk("/getBlogs", async () => {
-  const url = `https://pilgrimedu.az/api/v1/v1/blogs`;
+  const url = `https://pilgrimedu.az/api/v1/blogs`;
 
   const response = await fetch(url, {
     method: "GET",

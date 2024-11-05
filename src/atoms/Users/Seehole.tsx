@@ -100,10 +100,10 @@ const Seehole: React.FC<{
           <div className="w-1/2 border-[1px] border-[#b0b0b0] rounded flex-col gap-y-5 flex px-8 py-8">
             {caseEdit ? (
               <form
-                onChange={(e) => handleChange(e)}
                 className="flex flex-col bg-white gap-y-2"
               >
                 <input
+                onChange={(e) => handleChange(e)}
                   className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="username"
                   autoFocus={true}
@@ -111,12 +111,16 @@ const Seehole: React.FC<{
                   type="text"
                 />
                 <input
+                                onChange={(e) => handleChange(e)}
+
                   className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="email"
                   value={details.email} // Bound to `details`
                   type="text"
                 />
                 <input
+                                onChange={(e) => handleChange(e)}
+
                   className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"
                   id="phone"
                   value={details.phone} // Bound to `details`
@@ -124,6 +128,7 @@ const Seehole: React.FC<{
                 />
 
                 <select
+                
                   value={formOptions.degree}
                   onChange={(e) => chooseOption(e)}
                   className="px-4 py-5 border-[1px] border-[#bfbfbf] outline-none  rounded w-full"

@@ -148,10 +148,11 @@ const Login = () => {
         <form
           autoComplete="off"
           onSubmit={(e) => handleLogin(e)}
-          onChange={(e) => handleChange(e)}
           className="lg:w-2/5 z-10 xl:w-1/3 md:w-7/10 sm:w-11/12 flex flex-col items-center mt-6"
         >
           <input
+                    onChange={(e) => handleChange(e)}
+
             id="username"
             value={loginForm.username}
             className="h-16 border-[#aca4a4] w-full px-2 py-2 block bg-white text-black rounded 
@@ -161,6 +162,8 @@ const Login = () => {
             type="text" // Change to "text" instead of "username"
           />
           <input
+                    onChange={(e) => handleChange(e)}
+
             id="password"
             value={loginForm.password}
             className="h-16 border-[#aca4a4] w-full px-2 py-2 block bg-white text-black rounded 

@@ -4,7 +4,7 @@ import Title from "../Layout/Title";
 function TitleOfQuestions() {
   const count = useAppSelector((state) => state.fetchQuestions.questions)?.length;
 
-  return count!=0 && <Title text="Ümumi sualların sayı: " dat={count} />;
+  return count !== 0 && <Title text="Ümumi sualların sayı: " count={count} />;
 }
 
 export default TitleOfQuestions;

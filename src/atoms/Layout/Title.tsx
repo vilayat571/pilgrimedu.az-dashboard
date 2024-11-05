@@ -1,6 +1,6 @@
 interface ITitle {
   text: string;
-  count: number | undefined | string | null;
+  count: number | undefined;
 }
 
 const Title: React.FC<ITitle> = ({ text, count }) => {

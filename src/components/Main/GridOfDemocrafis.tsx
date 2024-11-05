@@ -26,10 +26,10 @@ const GridOfDemocrafis: React.FC<{
 
   useEffect(() => {
     Promise.all([
-      fetch("http://localhost:3001/api/v1/scholarships"),
-      fetch("http://localhost:3001/api/v1/questions"),
-      fetch("http://localhost:3001/api/v1/users"),
-      fetch("http://localhost:3001/api/v1/blogs"),
+      fetch("https://pilgrimedu.az/api/v1/scholarships"),
+      fetch("https://pilgrimedu.az/api/v1/questions"),
+      fetch("https://pilgrimedu.az/api/v1/users"),
+      fetch("https://pilgrimedu.az/api/v1/blogs"),
     ])
       .then((responses) => {
         return Promise.all(responses.map((response) => response.json()));

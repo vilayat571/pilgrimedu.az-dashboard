@@ -4,6 +4,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Layout from "../../layout/Layout";
 import { newDate } from "../../constants/fullDate.ts";
+import { toast, ToastContainer } from "react-toastify";
 
 export interface IAUTHOR {
   name: string;
@@ -38,12 +39,28 @@ const Addblog = () => {
       formData.append("description", form.description);
       formData.append("body", body);
 
-      const url = `https://pilgrimbackend.onrender.com/api/v1/blogs/add`;
+      const url = `https://pilgrimedu.az/api/v1/blogs/add`;
       await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
+      }).then((res)=> {
+         toast(res.data.message, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          style: {
+            backgroundColor: res.data.status == "OK" ? "green" : "red",
+            color: "white",
+            top: "20px",
+            fontFamily: "Oceanwide",
+          },
+        });
+      })
 
       setForm({
         title: "",
@@ -73,6 +90,7 @@ const Addblog = () => {
 
   return (
     <Layout>
+       <ToastContainer />
       <form id="blogId" className="" onSubmit={(e) => handleSubmit(e)}>
         <div className="mb-10">
           <span className="text-xl font-bold">Başlıq :</span>

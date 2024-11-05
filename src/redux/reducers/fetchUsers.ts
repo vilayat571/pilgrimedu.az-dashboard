@@ -23,7 +23,7 @@ export interface IinitialState {
 
 // Async thunk for fetching users
 export const getUsers = createAsyncThunk("/getUsers", async () => {
-  const url = `http://localhost:3001/api/v1/users`;
+  const url = `https://pilgrimedu.az/api/v1/users`;
 
   const response = await fetch(url, {
     method: "GET",

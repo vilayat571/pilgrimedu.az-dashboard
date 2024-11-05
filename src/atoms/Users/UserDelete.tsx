@@ -10,7 +10,7 @@ const UserDelete: React.FC<{
   const { message, setMessage } = useAlert("");
 
   const deleteUser = () => {
-    const url = `http://localhost:3001/api/v1/users/delete/${id}`;
+    const url = `https://pilgrimedu.az/api/v1/users/delete/${id}`;
     fetch(url, {
       method: "DELETE",
     })

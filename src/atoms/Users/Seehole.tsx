@@ -45,7 +45,7 @@ const Seehole: React.FC<{
   const { message, setMessage } = useAlert("");
 
   const sendData = () => {
-    const url = `http://localhost:3001/api/v1/users/edit/${user._id}`;
+    const url = `https://pilgrimedu.az/api/v1/users/edit/${user._id}`;
     fetch(url, {
       method: "PUT",
       headers: {

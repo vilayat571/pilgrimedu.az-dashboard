@@ -17,7 +17,7 @@ export interface IinitialState {
 }
 
 export const getQuestion = createAsyncThunk("/getQuestion", async () => {
-  const url = `http://localhost:3001/api/v1/questions`;
+  const url = `https://pilgrimedu.az/api/v1/v1/questions`;
 
   console.log(url);
 

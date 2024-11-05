@@ -33,7 +33,7 @@ function Addscholarship() {
   const sendScholarship = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await fetch(`${apiURL}/scholarships/add`, {
+    const response = await fetch(`${apiURL}scholarships/add`, {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
@@ -65,6 +65,8 @@ function Addscholarship() {
       setText("");
     }, 2000);
   };
+
+
 
   return (
     <Layout>

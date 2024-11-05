@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 
 interface ILayout {
   children: React.ReactNode;

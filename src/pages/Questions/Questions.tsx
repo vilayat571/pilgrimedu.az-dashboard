@@ -3,7 +3,6 @@ import Layout from "../../layout/Layout";
 import { useAppDispatch, useAppSelector } from "../../redux/store/store";
 import { getQuestion } from "../../redux/reducers/fetchQuestions";
 import { rmvQuestion } from "../../redux/reducers/removeItem";
-import TitleOfQuestions from "../../atoms/Questions/TitleOfQuestions";
 import SearchQuestions from "../../atoms/Questions/SearchQuestions";
 import Popupquestions from "../../atoms/Questions/Popupquestions";
 import { IQuestions, TQuestions } from "../../types/QuestionsType";

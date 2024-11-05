@@ -10,7 +10,7 @@ export interface IinitialState {
 export const getAllscholarships = createAsyncThunk(
   "/getAllscholarships",
   async () => {
-    const url = `http://localhost:3001/api/v1/scholarships`;
+    const url = `https://pilgrimedu.az/api/v1/scholarships`;
 
     const response = await fetch(url, {
       method: "GET",

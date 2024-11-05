@@ -90,7 +90,7 @@ const PopupBlogs: React.FC<{
       const value = isChanged();
       if (value) {
         const response = await fetch(
-          `http://localhost:3001/api/v1/blogs/put/${popup?._id}`,
+          `https://pilgrimedu.az/api/v1/blogs/put/${popup?._id}`,
           {
             method: "PUT",
             body: formData,

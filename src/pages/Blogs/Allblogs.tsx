@@ -21,7 +21,7 @@ function Allblogs() {
   }, [dispatch]);
 
   const handleDelete = async (id: string | undefined) => {
-    const url = `http://localhost:3001/api/v1/blogs/delete/${id}`;
+    const url = `https://pilgrimedu.az/api/v1/blogs/delete/${id}`;
     await fetch(url, {
       method: "DELETE",
     })
@@ -53,7 +53,7 @@ function Allblogs() {
   };
 
   const filteredBlogs = blogs?.filter((blog) => {
-    return blog.title.toLowerCase().includes(query.toLowerCase());
+    return blog?.title?.toLowerCase().includes(query.toLowerCase());
   });
 
   const showData = (data: IITEM) => {

@@ -1,1 +1,1 @@
-export const apiURL='http://localhost:3001/api/v1/'
+export const apiURL='https://pilgrimedu.az/api/v1/'

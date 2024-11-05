@@ -66,7 +66,7 @@ const Login = () => {
     } else {
       try {
         // Send login data to server
-        const url = "http://localhost:3001/api/v1/admin";
+        const url = "https://pilgrimedu.az/api/v1/admin";
         const response = await fetch(url, {
           method: "POST",
           headers: {

@@ -10,7 +10,7 @@ export interface IinitialState {
 export const rmvQuestion = createAsyncThunk(
   "/rmvQuestion",
   async ({ id }: { id: string }) => {
-    const url = `${apiURL}/questions/delete/${id}`;
+    const url = `${apiURL}questions/delete/${id}`;
 
     const response = await fetch(url, {
       method: "DELETE",

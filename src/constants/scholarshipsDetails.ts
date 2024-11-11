@@ -6,7 +6,7 @@ interface Option {
 export const options: Option[] = [
   { value: "Regionlar", label: "Regionlar" },
   { value: "Avropa", label: "Avropa" },
-  { value: "Amerika və kanada", label: "Amerika və kanada" },
+  { value: "Amerika və Kanada", label: "Amerika və Kanada" },
   { value: "Asiya", label: "Asiya" },
   { value: "İngiltərə", label: "İngiltərə" },
   {
@@ -14,8 +14,8 @@ export const options: Option[] = [
     label: "Rusiya və postsovet ölkələri",
   },
   {
-    value: "Türkiyə və müsəlman ölkələri",
-    label: "Türkiyə və müsəlman ölkələri",
+    value: "Türkiyə və İslam ölkələri",
+    label: "Türkiyə və İslam ölkələri",
   },
 ];
 

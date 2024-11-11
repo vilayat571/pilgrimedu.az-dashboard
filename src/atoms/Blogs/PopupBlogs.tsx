@@ -1,11 +1,8 @@
-import {
-  faArrowCircleLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import { IITEM } from "../../redux/reducers/fetchBlogs";
-import { toast, ToastContainer } from "react-toastify";
 
 const PopupBlogs: React.FC<{
   popup: IITEM | null;
@@ -65,6 +62,8 @@ const PopupBlogs: React.FC<{
     );
   };
 
+  const [toast, setToast] = useState("");
+
   const sendEditedBlog = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -74,9 +73,8 @@ const PopupBlogs: React.FC<{
     formData.append("title", editedBlog.title || "");
     formData.append("body", body || "");
     formData.append("description", editedBlog.description || "");
-    if (thumbnail instanceof File) {
-      formData.append("thumbnail", thumbnail); // Append the file correctly
-    }
+
+    formData.append("thumbnail", thumbnail || ''); // Append the file correctly
 
     try {
       if (isChanged()) {
@@ -88,21 +86,10 @@ const PopupBlogs: React.FC<{
           }
         );
         const result = await response.json();
-        toast(result.message, {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          style: {
-            backgroundColor: result.status === "OK" ? "green" : "red",
-            color: "white",
-            top: "20px",
-            fontFamily: "Oceanwide",
-          },
-        });
+        setToast(result.message);
+        setTimeout(() => {
+          setToast("");
+        }, 2000);
         if (result.status === "OK") {
           setBlogs(result.blogs);
           setPopupData(result.editedBlog);
@@ -124,18 +111,15 @@ const PopupBlogs: React.FC<{
     ],
   };
 
-  const getImageSrc = () => {
-    if (thumbnail instanceof File) {
-      return URL.createObjectURL(thumbnail);
-    }
-    return thumbnail;
-  };
-
   return (
     <>
       {edit ? (
         <div className="flex fixed bg-[#fff] left-0 top-0 overflow-x-hidden w-full h-screen pb-[200px] pt-12 items-start justify-center">
-          <ToastContainer />
+          {toast.length > 0 && (
+            <div className="fixed z-50 top-6 right-6 p-4 rounded text-white bg-black ">
+              {toast}
+            </div>
+          )}
           <FontAwesomeIcon
             icon={faArrowCircleLeft}
             onClick={() => {
@@ -152,16 +136,12 @@ const PopupBlogs: React.FC<{
             </p>
             <label htmlFor="file">
               <p className="text-2xl mb-4">Şəkil:</p>
-              <input
-                onChange={handleFileChange}
-                id="thumbnail"
-                type="file"
-              />
+              <input onChange={handleFileChange} id="thumbnail" type="file" />
               {thumbnail && typeof thumbnail === "string" && (
                 <div className="mt-4 text-lg">
                   <p>Cari şəkil:</p>
                   <img
-                    src={thumbnail}
+                    src={`https://pilgrimedu.az/medias/${thumbnail}`}
                     alt="Current thumbnail"
                     className="w-20 mt-1 h-20 object-cover rounded"
                   />
@@ -232,7 +212,9 @@ const PopupBlogs: React.FC<{
           <div className="flex fixed bg-white left-0 top-0 w-full h-auto pt-24 items-center pb-[200px] overflow-x-hidden justify-center">
             <FontAwesomeIcon
               icon={faArrowCircleLeft}
-              onClick={() => setPopup(null)}
+              onClick={() => {
+                setPopup(null), window.location.reload();
+              }}
               className="absolute right-12 px-5 py-4 text-2xl cursor-pointer top-6
               border-[1px] border-[#767676] transition duration-300 hover:border-red-600
               hover:bg-red-600 hover:text-white  text-black rounded"
@@ -243,17 +225,24 @@ const PopupBlogs: React.FC<{
               </p>
 
               <div className="w-full flex items-center flex-col justify-center ">
+                <div className="w-full text-left my-5">
+                  <h1 className="text-4xl font-semibold ">{popupData.title}</h1>
+                </div>
                 <img
-                  src={getImageSrc()}
+                  src={`https://pilgrimedu.az/medias/${popupData?.thumbnail}`}
                   className="w-full rounded h-[600px] border object-cover"
                   alt="thumbnail"
                 />
-                <div className="mt-6">
-                  <h1 className="text-4xl font-semibold">{popupData.title}</h1>
-                  <h2 className="text-2xl mt-4">{popupData.description}</h2>
-                </div>
-                <div className="mt-6">
-                  <h3 className="text-lg">{popupData.body}</h3>
+                <div className="w-full text-left">
+                  <div className="mt-6">
+                    <h2 className="text-2xl mt-4">{popupData.description}</h2>
+                  </div>
+                  <div className="mt-6">
+                    <p
+                      dangerouslySetInnerHTML={{ __html: popupData.body || "" }}
+                      className="text-lg"
+                    />
+                  </div>
                 </div>
                 <div className="mt-6 flex gap-x-5">
                   <button

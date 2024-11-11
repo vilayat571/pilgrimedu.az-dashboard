@@ -62,12 +62,12 @@ const Addblog = () => {
         });
       })
 
-      setForm({
+/*       setForm({
         title: "",
         description: "",
       });
       setThumnbail("");
-      setBody("");
+      setBody(""); */
     }
   };
 

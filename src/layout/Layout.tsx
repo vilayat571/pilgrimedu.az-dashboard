@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface ILayout {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<ILayout> = ({ children }) => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  /* useEffect(() => {
+   useEffect(() => {
     const token = localStorage.getItem("token");
     
     if (!token) {
@@ -26,7 +27,21 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         navigate("/");
       }
     }
-  }, [navigate]); */
+  }, [navigate]);
+
+  useEffect(() => {
+    // Clear local storage on window close or tab close
+    const clearLocalStorage = () => {
+      localStorage.clear();
+    };
+
+    // Attach event listener on unload
+    window.addEventListener("beforeunload", clearLocalStorage);
+
+    // Cleanup function to remove the event listener
+    return () => window.removeEventListener("beforeunload", clearLocalStorage);
+  }, []);
+
 
   return (
     <motion.div

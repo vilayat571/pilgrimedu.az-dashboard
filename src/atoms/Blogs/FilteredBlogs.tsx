@@ -21,23 +21,17 @@ const FilteredBlogs: React.FC<{
               >
                 <img
                   className="h-60 object-cover rounded-t rounded-b-none"
-                  src={
-                    item.thumbnail instanceof File
-                      ? URL.createObjectURL(item.thumbnail)
-                      : item.thumbnail || ""
-                  }
+                  src={`https://pilgrimedu.az/medias/${item?.thumbnail}`}
                   alt={`the image of ${item.title}`}
                 />
                 <div className="px-3 flex flex-col">
                   <p className="text-lg text-black flex gap-4 mt-5 my-3">
-                    {
-                      item.title
-                    }
+                    {item.title}
                   </p>
-              {/*     <p
+                      <p
                     dangerouslySetInnerHTML={{ __html: item.body || "" }}
                     className="text-lg font-semibold mt-3 mb-3 line-clamp-3"
-                  /> */}
+                  /> 
                   <div className="flex flex-row gap-2 mt-1">
                     <button
                       className="text-base rounded-[3px]

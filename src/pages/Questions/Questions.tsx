@@ -27,10 +27,12 @@ function Questions() {
   const [text, setText] = useState<TQuestions<string>>("");
   const [query, setQuery] = useState<TQuestions<string>>("");
 
-  const deleteQuestion = (id: TQuestions<string>) => {
+  const deleteQuestion = (id: TQuestions<string>, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const answer = confirm("Bu sualı silmək istəyirsiniz?");
 
     if (answer) {
+      e.preventDefault()
+
       dispatch(rmvQuestion({ id }))
         .then(() => {
           dispatch(getQuestion());
@@ -40,7 +42,7 @@ function Questions() {
           setTimeout(() => {
             setText("");
           }, 2000);
-        })
+        }) 
         .then(() => setData(null));
     }
   };
@@ -83,7 +85,6 @@ function Questions() {
                 <Popupquestions
                   setQuery={setQuery}
                   setData={setData}
-                  deleteQuestion={deleteQuestion}
                   data={data}
                 />
               )}
@@ -114,7 +115,7 @@ function Questions() {
                           </div>
                           <div className="flex items-center gap-3">
                             <button
-                              onClick={() => deleteQuestion(item._id)}
+                              onClick={(e) => deleteQuestion(item._id, e)}
                               className="text-base rounded-[3px]
                   hover:bg-red-600 hover:text-white transition duration-200 hover:border-red-600
                   border-[1px] border-[#b3b3b3]
